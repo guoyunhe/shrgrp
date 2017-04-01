@@ -9,11 +9,12 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 
 var config = require('./config');
 var dburi = require('./database').uri;
 var index = require('./routes/index');
-var facebook = require('./routes/facebook');
+var auth = require('./routes/auth');
 var users = require('./routes/users');
 
 var Friend = require('./models/friend');
@@ -27,7 +28,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -48,16 +49,35 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// passport config
+passport.use(new LocalStrategy(Friend.authenticate()));
+passport.use(
+  new FacebookStrategy({
+    clientID: config.facebook.app_id,
+    clientSecret: config.facebook.app_secret,
+    callbackURL: 'http://localhost:3000/auth/facebook/callback'
+  },
+  function(accessToken, refreshToken, profile, callback) {
+    Friend.findOrCreate({ facebookId: profile.id }, function (err, friend) {
+      return callback(err, friend);
+    });
+  })
+);
+//passport.serializeUser(Friend.serializeUser());
+//passport.deserializeUser(Friend.deserializeUser());
+passport.serializeUser(function(friend, done) {
+  done(null, friend.id);
+});
+passport.deserializeUser(function(id, done) {
+  Friend.findById(id, function(err, friend) {
+    done(null, friend);
+  });
+});
 
 // Load routes
 app.use('/', index);
 app.use('/users', users);
-app.use('/auth/facebook', facebook);
-
-// passport config
-passport.use(new LocalStrategy(Friend.authenticate()));
-passport.serializeUser(Friend.serializeUser());
-passport.deserializeUser(Friend.deserializeUser());
+app.use('/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
