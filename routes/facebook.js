@@ -21,11 +21,13 @@ passport.use(
 );
 
 passport.serializeUser(function(friend, done) {
-  done(null, friend);
+  done(null, friend.id);
 });
 
-passport.deserializeUser(function(friend, done) {
-  done(null, friend);
+passport.deserializeUser(function(id, done) {
+  Friend.findById(id, function(err, friend) {
+    done(null, friend);
+  });
 });
 
 // Define routes.

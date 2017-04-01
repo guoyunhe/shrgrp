@@ -2,7 +2,27 @@ doctype html
 html
   head
     title= title
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Josefin+Slab:400,700')
     link(rel='stylesheet', href='/stylesheets/app.css')
     script(src='/javascripts/bundle.js')
   body
+    header#app-header
+      #logo-wrap: img#logo(src='/images/logo.svg', width=128, height=128)
+      .name shrgrp
+      .desc a local sharing community
+      #me
+        if (typeof me !== 'undefined')
+          img.avatar(src=me.avatar, width=80, height=80)
+        else
+          a#login-button(href='/auth/facebook') login with facebook
+
     block content
+
+    footer#app-footer
+      span &copy; 2017 shrgrp team. a non-profit project. made in aalto arts.
+      |
+      |
+      a(href='https://fb.me/shrgrp.org', target='_blank') like us
+      |
+      |
+      a(href='https://m.me/shrgrp.org', target='_blank') contact us
