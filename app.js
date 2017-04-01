@@ -1,4 +1,5 @@
 var express = require('express');
+var browserify = require('browserify-middleware');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -37,6 +38,7 @@ app.use(require('node-sass-middleware')({
   indentedSyntax: true,
   sourceMap: true
 }));
+app.use('/javascripts/bundle.js', browserify(path.join(__dirname, 'public/javascripts/app.js')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret: config.session.secret,

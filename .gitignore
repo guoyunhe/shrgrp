@@ -1,3 +1,24 @@
+###################################### OS ######################################
+
+# OS X
+.DS_Store*
+Icon?
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+.directory
+*~
+
+################################# Editor & IDE #################################
+
+
+################################# NodeJS & NPM #################################
+
 # Logs
 logs
 *.log
@@ -36,5 +57,16 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
+################################# App Data #####################################
+
 # Config file, contains secrets and passwords
 config.js
+
+# Compiled assets
+public/javascripts/bundle.js
+public/javascripts/bundle.js.map
+public/stylesheets/*.css
+public/stylesheets/*.css.map
+
+# Uploaded files
+public/upload
