@@ -23,7 +23,7 @@
     "debug": "~2.6.0",
     "express": "~4.14.1",
     "express-session": "^1.15.2",
-    "fb-id": "0.0.2",
+    "fb": "^1.1.1",
     "jquery": "^3.2.1",
     "mongodb": "^2.2.25",
     "mongoose": "^4.9.2",

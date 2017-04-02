@@ -1,4 +1,15 @@
 extends layout
 
 block content
+  .container
+    ul
+      each group in groups
+        li: a.group(href='/groups/' + group.id) #{group.name.toLowerCase()}
+
+    a#group-create-button(href='/groups/_create') new group
+
+    form#group-create-form(action='/groups', method='post')
+      label url of facebook group
+      input(name='url')
+      button(type='submit') create
 

@@ -16,6 +16,7 @@ var dburi = require('./database').uri;
 var index = require('./routes/index');
 var auth = require('./routes/auth');
 var users = require('./routes/users');
+var groups = require('./routes/groups');
 
 var Friend = require('./models/friend');
 
@@ -59,6 +60,8 @@ passport.use(
   },
   function(accessToken, refreshToken, profile, callback) {
     Friend.findOrCreate({ facebookId: profile.id }, function (err, friend) {
+      friend.facebookToken = accessToken;
+      friend.save();
       return callback(err, friend);
     });
   })
@@ -77,6 +80,7 @@ passport.deserializeUser(function(id, done) {
 // Load routes
 app.use('/', index);
 app.use('/users', users);
+app.use('/groups', groups);
 app.use('/auth', auth);
 
 // catch 404 and forward to error handler

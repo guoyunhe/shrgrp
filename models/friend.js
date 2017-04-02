@@ -7,6 +7,7 @@ var Group = require('./group');
 
 var Friend = new Schema({
   facebookId: String,
+  facebookToken: String,
   role: String, // admin: delete any groups, add and delete things
   things: [{ type: Schema.Types.ObjectId, ref: 'Thing' }],
   groups: [{ type: Schema.Types.ObjectId, ref: 'Group' }]
@@ -17,7 +18,6 @@ Friend.plugin(findOrCreate);
 
 // 320x320px avatar from Facebook
 Friend.virtual('avatar').get(function () {
-  console.log('get avatar');
   return 'https://graph.facebook.com/' + this.facebookId + '/picture?type=square&width=320&height=320';
 });
 
