@@ -24,7 +24,6 @@
     "express": "~4.14.1",
     "express-session": "^1.15.2",
     "fb": "^1.1.1",
-    "jquery": "^3.2.1",
     "mongodb": "^2.2.25",
     "mongoose": "^4.9.2",
     "mongoose-findorcreate": "^1.0.1",
@@ -39,5 +38,20 @@
     "rxjs": "5.0.1",
     "serve-favicon": "~2.3.2",
     "zone.js": "^0.8.4"
+  },
+  "devDependencies": {
+    "@types/jquery": "^2.0.41",
+    "browserify": "^14.1.0",
+    "gulp": "^3.9.1",
+    "gulp-sourcemaps": "^2.5.0",
+    "gulp-typescript": "^3.1.6",
+    "gulp-uglify": "^2.1.2",
+    "gulp-util": "^3.0.8",
+    "jquery": "^3.2.1",
+    "tsify": "^3.0.1",
+    "typescript": "^2.2.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.9.0"
   }
 }
