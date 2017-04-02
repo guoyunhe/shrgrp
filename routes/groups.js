@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var fb = require('fb');
-var FBID = require('fb-id');
-var fbid = new FBID();
 var config = require('../config');
 var Group = require('../models/group');
 
