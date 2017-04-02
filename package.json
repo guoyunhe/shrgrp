@@ -6,19 +6,8 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "@angular/common": "~2.4.0",
-    "@angular/compiler": "~2.4.0",
-    "@angular/core": "~2.4.0",
-    "@angular/forms": "~2.4.0",
-    "@angular/http": "~2.4.0",
-    "@angular/platform-browser": "~2.4.0",
-    "@angular/platform-browser-dynamic": "~2.4.0",
-    "@angular/router": "~3.4.0",
-    "@angular/upgrade": "~2.4.0",
-    "angular-in-memory-web-api": "~0.3.1",
     "body-parser": "~1.16.0",
     "cookie-parser": "~1.4.3",
-    "core-js": "^2.4.1",
     "debug": "~2.6.0",
     "express": "~4.14.1",
     "express-session": "^1.15.2",
@@ -35,10 +24,20 @@
     "passport-local-mongoose": "^4.0.0",
     "pug": "~2.0.0-beta10",
     "rxjs": "5.0.1",
-    "serve-favicon": "~2.3.2",
-    "zone.js": "^0.8.4"
+    "serve-favicon": "~2.3.2"
   },
   "devDependencies": {
+    "@angular/animations": "^4.0.1",
+    "@angular/common": "^4.0.1",
+    "@angular/compiler": "^4.0.1",
+    "@angular/compiler-cli": "^4.0.1",
+    "@angular/core": "^4.0.1",
+    "@angular/forms": "^4.0.1",
+    "@angular/http": "^4.0.1",
+    "@angular/platform-browser": "^4.0.1",
+    "@angular/platform-browser-dynamic": "^4.0.1",
+    "@angular/platform-server": "^4.0.1",
+    "@angular/router": "^4.0.1",
     "@types/jquery": "^2.0.41",
     "browserify": "^14.1.0",
     "gulp": "^3.9.1",
@@ -51,6 +50,7 @@
     "typescript": "^2.2.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.9.0"
+    "watchify": "^3.9.0",
+    "zone.js": "^0.8.5"
   }
 }
