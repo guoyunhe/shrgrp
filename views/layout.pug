@@ -7,14 +7,15 @@ html
     script(src='/javascripts/bundle.js')
   body
     header#app-header
-      #logo-wrap: img#logo(src='/images/logo.svg', width=128, height=128)
-      .name shrgrp
-      .desc a local sharing community
-      #me
-        if (typeof me !== 'undefined')
-          img.avatar(src=me.avatar, width=80, height=80)
-        else
-          a#login-button(href='/auth/facebook') login with facebook
+      
+        a(href="/"): img#logo(src='/images/logo.svg', width=128, height=128)
+        .name: a(href="/") shrgrp
+        .desc a local sharing community
+        #me
+          if (typeof me !== 'undefined')
+            img.avatar(src=me.avatar, width=80, height=80)
+          else
+            a#login-button(href='/auth/facebook') login with facebook
 
     block content
 

@@ -10,4 +10,4 @@ $(function () {
     platformBrowserDynamic().bootstrapModule(AppModule);
 });
 
-console.log('hello'); // hello
+console.log('hi, app loaded');

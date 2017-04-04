@@ -4,10 +4,96 @@ var fb = require('fb');
 var config = require('../config');
 var Group = require('../models/group');
 
-/* get users listing. */
+/* return all groups */
+router.get('/', function(req, res, next) {
+  Group.find({}, function (err, groups) {
+    res.format({
+      'text/html': function(){
+        res.render('index');
+      },
+
+      'application/json': function(){
+        res.send(groups);
+      },
+
+      'default': function() {
+        // log the request and respond with 406
+        res.status(406).send('Not Acceptable');
+      }
+    });
+  });
+});
+
+/* return a group */
 router.get('/:id', function(req, res, next) {
-  Group.findOne({id: req.params.id}, function (err, group) {
-    res.render('group', group);
+  Group.findOne({ $or:[ { _id: req.params.id }, { slug: req.params.id } ] }, function (err, group) {
+    res.format({
+      'text/html': function(){
+        res.render('index');
+      },
+
+      'application/json': function(){
+        res.send(group);
+      },
+
+      'default': function() {
+        // log the request and respond with 406
+        res.status(406).send('Not Acceptable');
+      }
+    });
+  });
+});
+
+/* return friends in a group */
+router.get('/:id/friends', function(req, res, next) {
+  Group.findOne({ $or:[ { _id: req.params.id }, { slug: req.params.id } ] })
+  .populate('friends').exec(function (err, group) {
+    res.format({
+      'text/html': function(){
+        res.render('index');
+      },
+
+      'application/json': function(){
+        res.send(group.friends);
+      },
+
+      'default': function() {
+        // log the request and respond with 406
+        res.status(406).send('Not Acceptable');
+      }
+    });
+  });
+});
+
+/* join a group */
+router.post('/:id/me', function(req, res, next) {
+  // find the group and populate friends
+  Group.findOne({ $or:[ { _id: req.params.id }, { slug: req.params.id } ] })
+  .populate('friends').exec(function (err, group) {
+    if (err) return next(err);
+    
+    group.friends.push({ _id: req.user._id });
+
+    group.save(function (err) {
+      if (err) return next(err);
+      res.status(200).send('OK');
+    });
+  });
+});
+
+/* quit a group */
+router.delete('/:id/me', function(req, res, next) {
+  // find the group and populate friends
+  Group.findOne({ $or:[ { _id: req.params.id }, { slug: req.params.id } ] })
+  .populate('friends').exec(function (err, group) {
+    if (err) return next(err);
+    
+    group.friends.pull({ _id: req.user._id });
+    
+    group.save(function (err) {
+      if (err) return next(err);
+      res.status(200).send('OK');
+    });
   });
 });
 

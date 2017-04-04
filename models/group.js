@@ -5,7 +5,8 @@ var slug = require('mongoose-url-slugs');
 
 var Group = new Schema({
   name: {type: String, default: '', trim: true},
-  facebookId: String
+  facebookId: String,
+  friends: [{ type: Schema.Types.ObjectId, ref: 'Friend' }]
 });
 
 Group.plugin(findOrCreate);
