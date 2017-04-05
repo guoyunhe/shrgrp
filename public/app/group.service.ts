@@ -1,3 +1,5 @@
+/// <reference types="jquery" />
+
 import { Injectable } from '@angular/core';
 import * as $ from 'jquery';
 
@@ -11,7 +13,7 @@ export class GroupService {
 
   constructor() { }
 
-  getGroups() {
+  getGroups(): Group[] {
     var that = this;
     $.ajax({
       url: '/groups',
@@ -25,7 +27,13 @@ export class GroupService {
     return this.groups;
   }
 
-  getFriends(group: Group) {
+  getGroup(id: string): Group {
+    return this.groups.find(function(group: Group) {
+      return group.id === id
+    });
+  }
+
+  getFriends(group: Group): Friend[] {
     var friends: Friend[] = [];
     $.ajax({
       url: '/groups/' + group.id + '/friends',
@@ -35,19 +43,18 @@ export class GroupService {
       data.forEach(item => {
         friends.push(new Friend(item._id, item.facebookId, item.name));
       });
-      console.log(friends);
     });
     return friends;
   }
 
-  joinGroup(group: Group) {
+  joinGroup(group: Group): void {
     $.ajax({
       url: '/groups/' + group.id + '/me',
       method: 'post'
     });
   }
 
-  quitGroup(group: Group) {
+  quitGroup(group: Group): void {
     $.ajax({
       url: '/groups/' + group.id + '/me',
       method: 'delete'
