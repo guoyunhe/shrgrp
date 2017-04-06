@@ -60,6 +60,8 @@ passport.use(
   function(accessToken, refreshToken, profile, callback) {
     Friend.findOrCreate({ facebookId: profile.id }, function (err, friend) {
       friend.facebookToken = accessToken;
+      friend.name = profile.displayName;
+      console.log(profile);
       friend.save();
       return callback(err, friend);
     });
@@ -80,6 +82,7 @@ passport.deserializeUser(function(id, done) {
 app.use('/', index);
 app.use('/users', users);
 app.use('/groups', groups);
+app.use('/me', require('./routes/me'));
 app.use('/auth', auth);
 
 // catch 404 and forward to error handler

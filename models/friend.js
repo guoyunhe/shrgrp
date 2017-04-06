@@ -8,6 +8,7 @@ var Group = require('./group');
 var Friend = new Schema({
   facebookId: String,
   facebookToken: String,
+  name: String,
   role: String, // admin: delete any groups, add and delete things
   things: [{ type: Schema.Types.ObjectId, ref: 'Thing' }],
   groups: [{ type: Schema.Types.ObjectId, ref: 'Group' }]
