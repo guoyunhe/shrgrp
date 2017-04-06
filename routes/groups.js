@@ -34,7 +34,6 @@ router.get('/:id', function(req, res, next) {
     query = Group.findOne({slug: req.params.id});
   }
   query.exec(function (err, group) {
-    console.log(group);
     res.format({
       'text/html': function(){
         res.render('index');
