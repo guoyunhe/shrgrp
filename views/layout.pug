@@ -6,6 +6,7 @@ html(lang='en')
     base(href='/')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Titillium+Web:400,700')
+    link(rel='stylesheet', href='/node_modules/normalize.css/normalize.css')
     link(rel='stylesheet', href='/stylesheets/app.css')
 
     script(src='/node_modules/core-js/client/shim.min.js')
@@ -14,11 +15,12 @@ html(lang='en')
     script(src='/systemjs.config.js')
     script System.import('main.js').catch(function(err){ console.error(err); });
   body
-    header#app-header
-      
-      a(href='/'): img#logo(src='/images/logo.svg', width=128, height=128)
-      .name: a(href='/') shrgrp
-      .desc share things &amp; make friends
+    header#header
+
+      a.logo-wrap(href='/'): img.logo(src='/images/logo.svg', width=128, height=128)
+
+      h1.name: a(href='/') shrgrp
+      div.desc share things &amp; make friends
 
     block content
 
