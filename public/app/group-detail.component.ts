@@ -1,7 +1,8 @@
 import 'rxjs/add/operator/switchMap';
-import { Component, OnInit }      from '@angular/core';
+import { Component, OnInit, DoCheck }      from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Location }               from '@angular/common';
+import { Location } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 
 import { Friend } from './friend';
 import { Group } from './group';
@@ -19,19 +20,26 @@ import { GroupService } from './group.service';
     `,
   providers: [GroupService]
 })
-export class GroupDetailComponent implements OnInit {
+export class GroupDetailComponent implements OnInit, DoCheck {
   public group: Group;
 
   constructor(
     private service: GroupService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private title: Title
   ) {}
 
   ngOnInit(): void {
     this.route.params
       .switchMap((params: Params) => this.service.getGroup(params['id']))
       .subscribe(group => this.group = group);
+  }
+
+  ngDoCheck(): void {
+    if (this.group && this.group.name) {
+      this.title.setTitle(this.group.name.toLowerCase() + ' @ shrgrp');
+    }
   }
 
   join() {

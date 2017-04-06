@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { Group } from './group';
 import { GroupService } from './group.service';
@@ -14,9 +15,13 @@ import { GroupService } from './group.service';
 export class GroupListComponent implements OnInit {
   public groups: Group[];
 
-  constructor(private service: GroupService) { }
+  constructor(
+    private service: GroupService,
+    private title: Title
+  ) { }
 
   ngOnInit() {
     this.service.getGroups().then(groups => this.groups = groups);
+    this.title.setTitle('groups @ shrgrp');
   }
 }
