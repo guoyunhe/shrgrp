@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var mongoose = require('mongoose');
 var fb = require('fb');
 var config = require('../config');
 var Group = require('../models/group');
@@ -26,7 +27,14 @@ router.get('/', function(req, res, next) {
 
 /* return a group */
 router.get('/:id', function(req, res, next) {
-  Group.findOne({ $or:[ { _id: req.params.id }, { slug: req.params.id } ] }, function (err, group) {
+  var query;
+  if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+    query = Group.findById(req.params.id);
+  } else {
+    query = Group.findOne({slug: req.params.id});
+  }
+  query.exec(function (err, group) {
+    console.log(group);
     res.format({
       'text/html': function(){
         res.render('index');
@@ -71,7 +79,7 @@ router.post('/:id/me', function(req, res, next) {
   Group.findOne({ $or:[ { _id: req.params.id }, { slug: req.params.id } ] })
   .populate('friends').exec(function (err, group) {
     if (err) return next(err);
-    
+
     group.friends.push({ _id: req.user._id });
 
     group.save(function (err) {
@@ -87,9 +95,9 @@ router.delete('/:id/me', function(req, res, next) {
   Group.findOne({ $or:[ { _id: req.params.id }, { slug: req.params.id } ] })
   .populate('friends').exec(function (err, group) {
     if (err) return next(err);
-    
+
     group.friends.pull({ _id: req.user._id });
-    
+
     group.save(function (err) {
       if (err) return next(err);
       res.status(200).send('OK');

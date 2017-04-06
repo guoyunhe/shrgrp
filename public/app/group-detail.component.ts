@@ -1,6 +1,7 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Location } from '@angular/common';
 import 'rxjs/add/operator/switchMap';
+import { Component, OnInit }      from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Location }               from '@angular/common';
 
 import { Friend } from './friend';
 import { Group } from './group';
@@ -9,36 +10,28 @@ import { GroupService } from './group.service';
 @Component({
   selector: 'group-detail',
   template: `
-    <h2>{{ group.name }}</h2>
-    <button type="button" (click)="join()">join</button>
-    <button type="button" (click)="quit()">quit</button>
-    <div *ngFor="let friend of friends">
-        <img src="{{ friend.getAvatar() }}" width="50" height="50">
+    <button (click)="goBack()">back</button>
+    <div *ngIf="group">
+      <h2>{{ group.name | lowercase }}</h2>
+      <button type="button" (click)="join()">join</button>
+      <button type="button" (click)="quit()">quit</button>
     </div>
     `,
   providers: [GroupService]
 })
-export class GroupDetailComponent implements OnInit, OnChanges {
-  @Input() public group: Group;
-  public friends: Friend[];
+export class GroupDetailComponent implements OnInit {
+  public group: Group;
 
   constructor(
-    private service: GroupService
-  ) { }
+    private service: GroupService,
+    private route: ActivatedRoute,
+    private location: Location
+  ) {}
 
-  ngOnInit() {
-    //
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    // changes.prop contains the old and the new value...
-    if (changes['group']) {
-      this.update();
-    }
-  }
-
-  update() {
-    this.friends = this.service.getFriends(this.group);
+  ngOnInit(): void {
+    this.route.params
+      .switchMap((params: Params) => this.service.getGroup(params['id']))
+      .subscribe(group => this.group = group);
   }
 
   join() {
@@ -47,5 +40,9 @@ export class GroupDetailComponent implements OnInit, OnChanges {
 
   quit() {
     this.service.quitGroup(this.group);
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

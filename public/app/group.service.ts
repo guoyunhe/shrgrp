@@ -1,7 +1,6 @@
-/// <reference types="jquery" />
-
 import { Injectable } from '@angular/core';
-import * as $ from 'jquery';
+import { Headers, Http } from '@angular/http';
+import 'rxjs/add/operator/toPromise';
 
 import { Group } from './group';
 import { Friend } from './friend';
@@ -11,53 +10,40 @@ export class GroupService {
   private groups: Group[] = [];
   private friends: Friend[] = [];
 
-  constructor() { }
+  constructor(private http: Http) { }
 
-  getGroups(): Group[] {
-    var that = this;
-    $.ajax({
-      url: '/groups',
-      method: 'get',
-      dataType: 'json'
-    }).done(function (data: any[]) {
-      data.forEach(item => {
-        that.groups.push(new Group(item._id, item.facebookId, item.name, item.slug));
-      });
-    });
-    return this.groups;
+  getGroups(): Promise<Group[]> {
+    return this.http.get('/groups').toPromise()
+               .then(response => response.json() as Group[])
+               .catch(this.handleError);
   }
 
-  getGroup(id: string): Group {
-    return this.groups.find(function(group: Group) {
-      return group.id === id
-    });
+  getGroup(id: string): Promise<Group> {
+    return this.http.get('/groups/'+ id).toPromise()
+               .then(response => response.json() as Group)
+               .catch(this.handleError);
   }
 
-  getFriends(group: Group): Friend[] {
-    var friends: Friend[] = [];
-    $.ajax({
-      url: '/groups/' + group.id + '/friends',
-      method: 'get',
-      dataType: 'json'
-    }).done(function (data: any[]) {
-      data.forEach(item => {
-        friends.push(new Friend(item._id, item.facebookId, item.name));
-      });
-    });
-    return friends;
+  getFriends(group: Group): Promise<Friend[]> {
+    return this.getFriendsByGroupId(group._id);
+  }
+
+  getFriendsByGroupId(id: string): Promise<Friend[]> {
+    return this.http.get('/groups/' + id + '/friends').toPromise()
+               .then(response => response.json() as Friend[])
+               .catch(this.handleError);
   }
 
   joinGroup(group: Group): void {
-    $.ajax({
-      url: '/groups/' + group.id + '/me',
-      method: 'post'
-    });
+    this.http.post('/groups/' + group._id + '/me', null);
   }
 
   quitGroup(group: Group): void {
-    $.ajax({
-      url: '/groups/' + group.id + '/me',
-      method: 'delete'
-    });
+    this.http.delete('/groups/' + group._id + '/me');
+  }
+
+  private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error); // for demo purposes only
+    return Promise.reject(error.message || error);
   }
 }

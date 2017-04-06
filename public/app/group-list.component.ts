@@ -7,23 +7,16 @@ import { GroupService } from './group.service';
   selector: 'group-list',
   template: `
     groups
-    <a *ngFor="let group of groups" (click)="select(group)" [ngClass]="{active: selected === group}">{{ group.name }}</a>
-
-    <group-detail *ngIf="selected" [group]="selected"></group-detail>
+    <a *ngFor="let group of groups" routerLink="/groups/{{group.slug}}">{{ group.name | lowercase }}</a>
     `,
   providers: [GroupService]
 })
 export class GroupListComponent implements OnInit {
   public groups: Group[];
-  public selected: Group;
 
   constructor(private service: GroupService) { }
 
   ngOnInit() {
-    this.groups = this.service.getGroups();
-  }
-
-  select(group: Group) {
-    this.selected = group;
+    this.service.getGroups().then(groups => this.groups = groups);
   }
 }
