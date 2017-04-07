@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+var mongoose = require('mongoose');
+
+// Initialize database connection
+var dburi = require('../database').uri;
+mongoose.connect(dburi);
+
+var Friend = require('../models/friend');
+
+program.version('0.0.1');
+
+/**
+ * Set administrators
+ *
+ * Useage:
+ *
+ * ./bin/admin setadmin <id>
+ */
+program.command('setadmin <id>').action(function (id) {
+  Friend.findById(id, function(err, friend) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.error('set %s as admin', [friend.name]);
+    friend.role = 'admin';
+    friend.save(function () {
+      process.exit(1);
+    });
+  });
+});
+
+program.parse(process.argv);
