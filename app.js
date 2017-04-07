@@ -86,6 +86,7 @@ passport.deserializeUser(function(id, done) {
 app.use('/', index);
 app.use('/groups', groups);
 app.use('/me', require('./routes/me'));
+app.use('/admin', require('./routes/admin'));
 app.use('/about', require('./routes/about'));
 app.use('/auth', auth);
 
