@@ -89,11 +89,14 @@ app.use('/me', require('./routes/me'));
 app.use('/about', require('./routes/about'));
 app.use('/auth', auth);
 
-// catch 404 and forward to error handler
+// 404 route, let front-end do the job
+app.get('/404', function (req, res) {
+  res.status(404);
+  res.render('index');
+});
+// redirect all unknown routes to 404
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  res.redirect('/404');
 });
 
 // error handler
