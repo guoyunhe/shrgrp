@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { GroupListComponent } from './group-list.component';
 import { GroupDetailComponent } from './group-detail.component';
 import { MeComponent } from './me.component';
+import { AdminComponent } from './admin.component';
 import { AboutComponent } from './about.component';
 import { NotFoundComponent } from './not-found.component';
 
@@ -25,6 +26,7 @@ import { GroupService } from './group.service';
     GroupListComponent,
     GroupDetailComponent,
     MeComponent,
+    AdminComponent,
     AboutComponent,
     NotFoundComponent
   ],

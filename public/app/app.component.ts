@@ -9,6 +9,7 @@ import { AuthService } from './auth.service';
       <nav id="navbar">
         <a routerLink="/groups" routerLinkActive="active">groups</a>
         <a *ngIf="me" routerLink="/me" routerLinkActive="active">me</a>
+        <a *ngIf="me && me.role === 'admin'" routerLink="/admin" routerLinkActive="active">admin</a>
         <a *ngIf="!me" href="/auth/facebook">login</a>
         <a routerLink="/about" routerLinkActive="active">about</a>
       </nav>
