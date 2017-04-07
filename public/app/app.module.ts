@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GroupListComponent } from './group-list.component';
 import { GroupDetailComponent } from './group-detail.component';
+import { MeComponent } from './me.component';
 import { NotFoundComponent } from './not-found.component';
 
 import { AuthService } from './auth.service';
@@ -22,6 +23,7 @@ import { GroupService } from './group.service';
     AppComponent,
     GroupListComponent,
     GroupDetailComponent,
+    MeComponent,
     NotFoundComponent
   ],
   providers: [

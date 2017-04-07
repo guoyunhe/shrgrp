@@ -8,9 +8,9 @@ import { AuthService } from './auth.service';
     template: `
       <nav id="navbar">
         <a routerLink="/groups" routerLinkActive="active">groups</a>
-        <a routerLink="/friends" routerLinkActive="active">friends</a>
-        <a *ngIf="me">{{ me.name | lowercase }}</a>
+        <a *ngIf="me" routerLink="/me" routerLinkActive="active">me</a>
         <a *ngIf="!me" href="/auth/facebook">login</a>
+        <a routerLink="/friends" routerLinkActive="active">about</a>
       </nav>
       <router-outlet></router-outlet>
     `
