@@ -1,0 +1,26 @@
+<div *ngIf="thing" [hidden]="submitted">
+  <h1 *ngIf="thing._id">edit {{ thing.name | lowercase }}</h1>
+  <h1 *ngIf="!thing._id">create new</h1>
+  <form (ngSubmit)="onSubmit()" #thingForm="ngForm">
+    <div class="form-group">
+      <label for="name">name</label>
+      <input type="text" class="form-control" id="name" required [(ngModel)]="thing.name" name="name" #name="ngModel">
+      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+        name is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="name">url</label>
+      <span>https://shrgrp.org/things/{{ thing.name | slugify }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="name">icon</label>
+      <input type="file" (change)="upload($event)">
+      <img *ngIf="thing.icon" width="128" height="128" [src]="thing.icon">
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="!thingForm.form.valid">submit</button>
+  </form>
+</div>

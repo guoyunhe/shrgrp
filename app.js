@@ -13,11 +13,6 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 
 var config = require('./config');
 var dburi = require('./database').uri;
-var index = require('./routes/index');
-var auth = require('./routes/auth');
-var users = require('./routes/users');
-var groups = require('./routes/groups');
-
 var Friend = require('./models/friend');
 
 var app = express();
@@ -42,13 +37,14 @@ app.use(require('node-sass-middleware')({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(session({
-    secret: config.session.secret,
-    resave: false,
-    saveUninitialized: false,
-    store: new MongoStore({
-      mongooseConnection: mongoose.connection
-    })
+  secret: config.session.secret,
+  resave: false,
+  saveUninitialized: false,
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection
+  })
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -61,47 +57,75 @@ passport.use(
     clientSecret: config.facebook.app_secret,
     callbackURL: 'http://localhost:3000/auth/facebook/callback'
   },
-  function(accessToken, refreshToken, profile, callback) {
-    Friend.findOrCreate({ facebookId: profile.id }, function (err, friend) {
-      friend.facebookToken = accessToken;
-      friend.name = profile.displayName;
-      console.log(profile);
-      friend.save();
-      return callback(err, friend);
-    });
-  })
+    function (accessToken, refreshToken, profile, callback) {
+      Friend.findOrCreate({ facebookId: profile.id }, function (err, friend) {
+        friend.facebookToken = accessToken;
+        friend.name = profile.displayName;
+        console.log(profile);
+        friend.save();
+        return callback(err, friend);
+      });
+    })
 );
 //passport.serializeUser(Friend.serializeUser());
 //passport.deserializeUser(Friend.deserializeUser());
-passport.serializeUser(function(friend, done) {
+passport.serializeUser(function (friend, done) {
   done(null, friend.id);
 });
-passport.deserializeUser(function(id, done) {
-  Friend.findById(id, function(err, friend) {
+passport.deserializeUser(function (id, done) {
+  Friend.findById(id, function (err, friend) {
     done(null, friend);
   });
 });
 
 // Load routes
-app.use('/', index);
-app.use('/groups', groups);
+app.use('/', require('./routes/index'));
+app.use('/groups', require('./routes/groups'));
+app.use('/things', require('./routes/things'));
+app.use('/uploads', require('./routes/uploads'));
 app.use('/me', require('./routes/me'));
 app.use('/admin', require('./routes/admin'));
 app.use('/about', require('./routes/about'));
-app.use('/auth', auth);
+app.use('/auth', require('./routes/auth'));
 
-// 404 route, let front-end do the job
+// 404 not found, let front-end do the job
 app.get('/404', function (req, res) {
   res.status(404);
-  res.render('index');
+  res.format({
+    'text/html': function () {
+      res.render('index');
+    },
+    'application/json': function () {
+      res.send({ message: 'not found' });
+    },
+    'default': function () {
+      res.send('not found');
+    }
+  });
 });
 // redirect all unknown routes to 404
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.redirect('/404');
 });
 
+// 403 permission denied, let front-end do the job
+app.get('/403', function (req, res) {
+  res.status(403);
+  res.format({
+    'text/html': function () {
+      res.render('index');
+    },
+    'application/json': function () {
+      res.send({ message: 'permission denied' });
+    },
+    'default': function () {
+      res.send('permission denied');
+    }
+  });
+});
+
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

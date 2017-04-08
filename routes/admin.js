@@ -1,7 +1,9 @@
 var router = require('express').Router();
+var admin = require('../middlewares/admin');
 
-/* about page */
-router.get('/', function(req, res, next) {
+router.use(admin);
+
+router.get('/', admin, function(req, res, next) {
   res.render('index');
 });
 

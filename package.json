@@ -50,6 +50,8 @@
     "mongoose-findorcreate": "^1.0.1",
     "mongoose-url-slugs": "^0.2.1",
     "morgan": "~1.7.0",
+    "multer": "^1.3.0",
+    "ngx-pipes": "^1.5.7",
     "node-sass-middleware": "0.9.8",
     "normalize.css": "^6.0.0",
     "passport": "^0.3.2",
@@ -59,6 +61,7 @@
     "pug": "~2.0.0-beta10",
     "rxjs": "5.0.1",
     "serve-favicon": "~2.3.2",
+    "svgo": "^0.7.2",
     "systemjs": "^0.20.11",
     "typescript": "^2.2.2",
     "zone.js": "^0.8.4"
