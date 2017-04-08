@@ -15,7 +15,7 @@ import { ThingService } from './thing.service';
       <p *ngFor="let thing of things" (click)="editThing(thing)">{{ thing._id }} {{ thing.name | lowercase }}</p>
 
       <button (click)="createThing()">new</button>
-      <thing-form [thing]="thing" [callback]="onThingCreated"></thing-form>
+      <thing-form [thing]="thing"></thing-form>
       <h2>groups</h2>
 
       <h2>friends</h2>
