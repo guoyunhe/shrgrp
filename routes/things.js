@@ -49,7 +49,7 @@ router.get('/:id', function (req, res, next) {
   });
 });
 
-/* update a new thing */
+/* update a thing */
 router.patch('/:id', function (req, res, next) {
   Thing.findById(req.params.id, function (err, thing) {
     if (req.body.name) thing.name = req.body.name;
@@ -62,6 +62,14 @@ router.patch('/:id', function (req, res, next) {
       res.send(thing);
     })
   });
+});
+
+/* delete a thing */
+router.delete('/:id', function (req, res, next) {
+  Thing.findByIdAndRemove(req.params.id, function (err) {
+    if (err) return next(err);
+    res.send();
+  })
 });
 
 module.exports = router;

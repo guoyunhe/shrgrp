@@ -33,10 +33,10 @@ export class ThingService {
                .catch(this.handleError);
   }
 
-  deleteThing(thing: Thing): void {
-    this.http.delete('/things/' + thing._id).toPromise()
-        .then(response => thing = null)
-        .catch(this.handleError);
+  deleteThing(thing: Thing): Promise<Thing> {
+    return this.http.delete('/things/' + thing._id).toPromise()
+               .then(response => thing)
+               .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {

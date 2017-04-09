@@ -10,12 +10,19 @@ import { ThingService } from './thing.service';
   selector: 'admin',
   template: `
       <h1>admin panel</h1>
+
       <h2>things</h2>
 
-      <p *ngFor="let thing of things" (click)="editThing(thing)">{{ thing._id }} {{ thing.name | lowercase }}</p>
+      <p *ngFor="let thing of things">
+        <img width="50" height="50" [src]="thing.icon || '/images/ph-icon.svg'">
+        {{ thing.name | lowercase }}
+        <button (click)="editThing(thing)">edit</button>
+        <button (click)="deleteThing(thing)">delete</button>
+      </p>
 
       <button (click)="createThing()">new</button>
       <thing-form [thing]="thing"></thing-form>
+
       <h2>groups</h2>
 
       <h2>friends</h2>
@@ -43,5 +50,11 @@ export class AdminComponent {
 
   editThing(thing: Thing) {
     this.thing = thing;
+  }
+
+  deleteThing(thing: Thing) {
+    this.thingService.deleteThing(thing).then(thing => {
+      this.things = this.things.filter(function (e) { return e !== thing});
+    });
   }
 }
