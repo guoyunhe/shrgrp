@@ -1,4 +1,4 @@
-<div *ngIf="thing" [hidden]="submitted">
+<div *ngIf="thing" [hidden]="!open">
   <h1 *ngIf="thing._id">edit {{ thing.name | lowercase }}</h1>
   <h1 *ngIf="!thing._id">create new</h1>
   <form (ngSubmit)="onSubmit()" #thingForm="ngForm">
@@ -14,6 +14,27 @@
       <label for="name">url</label>
       <span>https://shrgrp.org/things/{{ thing.name | slugify }}</span>
     </div>
+
+    <label>
+      <input type="radio" name="cat" [(ngModel)]="thing.cat" value="tools">
+      tools
+    </label>
+    <label>
+      <input type="radio" name="cat" [(ngModel)]="thing.cat" value="kitchen">
+      kitchen
+    </label>
+    <label>
+      <input type="radio" name="cat" [(ngModel)]="thing.cat" value="sports">
+      sports
+    </label>
+    <label>
+      <input type="radio" name="cat" [(ngModel)]="thing.cat" value="party">
+      party
+    </label>
+    <label>
+      <input type="radio" name="cat" [(ngModel)]="thing.cat" value="other">
+      other
+    </label>
 
     <div class="form-group">
       <label for="name">icon</label>

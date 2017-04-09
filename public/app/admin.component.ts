@@ -13,7 +13,7 @@ import { ThingService } from './thing.service';
 
       <h2>things</h2>
 
-      <p *ngFor="let thing of things">
+      <p *ngFor="let thing of things" [hidden]="!thing._id">
         <img width="50" height="50" [src]="thing.icon || '/images/ph-icon.svg'">
         {{ thing.name | lowercase }}
         <button (click)="editThing(thing)">edit</button>
@@ -21,7 +21,8 @@ import { ThingService } from './thing.service';
       </p>
 
       <button (click)="createThing()">new</button>
-      <thing-form [thing]="thing"></thing-form>
+
+      <thing-form [thing]="thing" [open]="thingFormOpen"></thing-form>
 
       <h2>groups</h2>
 
@@ -32,6 +33,7 @@ export class AdminComponent {
   private me: Friend;
   private thing: Thing; // selected thing for edit or create new
   private things: Thing[];
+  private thingFormOpen: number = 0;
 
   constructor(
     private auth: AuthService,
@@ -46,15 +48,23 @@ export class AdminComponent {
   createThing() {
     this.thing = new Thing();
     this.things.push(this.thing);
+    this.thingFormOpen = Date.now();
   }
 
   editThing(thing: Thing) {
     this.thing = thing;
+    this.thingFormOpen = Date.now();
   }
 
   deleteThing(thing: Thing) {
-    this.thingService.deleteThing(thing).then(thing => {
+    if (thing._id) {
+      this.thingService.deleteThing(thing).then(thing => {
+        this.things = this.things.filter(function (e) { return e !== thing});
+        thing = null; // if it is referenced, set all of them to null
+      });
+    } else {
       this.things = this.things.filter(function (e) { return e !== thing});
-    });
+      thing = null; // if it is referenced, set all of them to null
+    }
   }
 }

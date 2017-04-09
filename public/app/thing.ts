@@ -5,8 +5,8 @@ export class Thing {
   public name: string;
   public slug: string;
   public icon: string;
-  public cat: string;
-  public published: boolean;
+  public cat: 'tools' | 'kitchen' | 'sports' | 'party' | 'other' = 'other';
+  public published: boolean = false;
   public friends: Friend[];
   constructor() { }
 }

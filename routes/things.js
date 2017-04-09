@@ -68,7 +68,7 @@ router.patch('/:id', function (req, res, next) {
 router.delete('/:id', function (req, res, next) {
   Thing.findByIdAndRemove(req.params.id, function (err) {
     if (err) return next(err);
-    res.send();
+    res.json({});
   })
 });
 
