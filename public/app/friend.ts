@@ -6,12 +6,6 @@ export class Friend {
   public facebookId: string;
   public name: string;
   public role: string;
-  public groups: Group[];
-  public things: Thing[];
-
-  constructor() { }
-
-  getAvatar() {
-    return 'https://graph.facebook.com/' + this.facebookId + '/picture?type=square&width=320&height=320';
-  }
+  public groups: Group[] | string[];
+  public things: Thing[] | string[];
 }

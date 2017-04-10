@@ -35,11 +35,13 @@ export class GroupService {
   }
 
   joinGroup(group: Group): void {
-    this.http.post('/groups/' + group._id + '/me', null);
+    this.http.post('/groups/' + group._id + '/me', null).toPromise()
+        .catch(this.handleError);
   }
 
   quitGroup(group: Group): void {
-    this.http.delete('/groups/' + group._id + '/me');
+    this.http.delete('/groups/' + group._id + '/me').toPromise()
+        .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {

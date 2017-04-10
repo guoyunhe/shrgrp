@@ -27,7 +27,11 @@ import { GroupService } from "./group.service";
 
     <h2>groups</h2>
 
-      h2 new group
+    <p *ngFor="let group of groups">
+      {{ group.name | lowercase }}
+      <button (click)="editGroup(group)">edit</button>
+      <button (click)="deleteGroup(group)">delete</button>
+    </p>
 
     form#group-create-form(action='/groups', method='post')
       label url of facebook group

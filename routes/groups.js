@@ -6,18 +6,18 @@ var config = require('../config');
 var Group = require('../models/group');
 
 /* return all groups */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   Group.find({}, function (err, groups) {
     res.format({
-      'text/html': function(){
+      'text/html': function () {
         res.render('index');
       },
 
-      'application/json': function(){
-        res.send(groups);
+      'application/json': function () {
+        res.json(groups);
       },
 
-      'default': function() {
+      'default': function () {
         // log the request and respond with 406
         res.status(406).send('Not Acceptable');
       }
@@ -26,86 +26,56 @@ router.get('/', function(req, res, next) {
 });
 
 /* return a group */
-router.get('/:id', function(req, res, next) {
-  var query;
-  if (mongoose.Types.ObjectId.isValid(req.params.id)) {
-    query = Group.findById(req.params.id);
-  } else {
-    query = Group.findOne({slug: req.params.id});
-  }
-  query.exec(function (err, group) {
-    res.format({
-      'text/html': function(){
-        res.render('index');
-      },
+router.get('/:id', function (req, res, next) {
+  res.format({
+    'text/html': function () {
+      res.render('index');
+    },
 
-      'application/json': function(){
-        res.send(group);
-      },
-
-      'default': function() {
-        // log the request and respond with 406
-        res.status(406).send('Not Acceptable');
+    'application/json': function () {
+      var query;
+      if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+        query = Group.findById(req.params.id);
+      } else {
+        query = Group.findOne({ slug: req.params.id });
       }
-    });
-  });
-});
+      query.populate('friends').exec(function (err, group) {
+        res.json(group);
+      });
+    },
 
-/* return friends in a group */
-router.get('/:id/friends', function(req, res, next) {
-  Group.findOne({ $or:[ { _id: req.params.id }, { slug: req.params.id } ] })
-  .populate('friends').exec(function (err, group) {
-    res.format({
-      'text/html': function(){
-        res.render('index');
-      },
-
-      'application/json': function(){
-        res.send(group.friends);
-      },
-
-      'default': function() {
-        // log the request and respond with 406
-        res.status(406).send('Not Acceptable');
-      }
-    });
+    'default': function () {
+      res.status(406).send('Not Acceptable');
+    }
   });
 });
 
 /* join a group */
-router.post('/:id/me', function(req, res, next) {
-  // find the group and populate friends
-  Group.findOne({ $or:[ { _id: req.params.id }, { slug: req.params.id } ] })
-  .populate('friends').exec(function (err, group) {
+router.post('/:id/me', function (req, res, next) {
+  Group.findByIdAndUpdate(req.params.id, { $addToSet: { friends: req.user._id } }, function (err, group) {
     if (err) return next(err);
 
-    group.friends.push({ _id: req.user._id });
-
-    group.save(function (err) {
+    req.user.update({ $addToSet: { groups: group._id } }, function (err, friend) {
       if (err) return next(err);
-      res.status(200).send('OK');
+      res.json(req.user);
     });
   });
 });
 
 /* quit a group */
-router.delete('/:id/me', function(req, res, next) {
-  // find the group and populate friends
-  Group.findOne({ $or:[ { _id: req.params.id }, { slug: req.params.id } ] })
-  .populate('friends').exec(function (err, group) {
+router.delete('/:id/me', function (req, res, next) {
+  Group.findByIdAndUpdate(req.params.id, { $pull: { friends: req.user._id } }, function (err, group) {
     if (err) return next(err);
 
-    group.friends.pull({ _id: req.user._id });
-
-    group.save(function (err) {
+    req.user.update({ $pull: { groups: group._id } }, function (err, friend) {
       if (err) return next(err);
-      res.status(200).send('OK');
+      res.json(req.user);
     });
   });
 });
 
 /* create a new group from a facebook group */
-router.post('/', function(req, res, next) {
+router.post('/', function (req, res, next) {
 
   fb.options({
     version: 'v2.8',
@@ -121,8 +91,8 @@ router.post('/', function(req, res, next) {
 
   if (parseInt(id)) {
     // if id is already numeric id, like '128729374293', use the basic get api
-    fb.api(id, {fields: ['id', 'name']}, function (res2) {
-      if(!res2 || res2.error) {
+    fb.api(id, { fields: ['id', 'name'] }, function (res2) {
+      if (!res2 || res2.error) {
         console.log(!res2 ? 'error occurred' : res2.error);
         var err = new Error('Invalid URL');
         err.status = 422;
@@ -139,8 +109,8 @@ router.post('/', function(req, res, next) {
     });
   } else {
     // if id is a username string, like 'avaruskatu', we have to use search api
-    fb.api('search', {q: id, type: 'group', fields: ['id', 'name']}, function (res2) {
-      if(!res2 || res2.error || !res2.data.length) {
+    fb.api('search', { q: id, type: 'group', fields: ['id', 'name'] }, function (res2) {
+      if (!res2 || res2.error || !res2.data.length) {
         console.log(!res2 ? 'error occurred' : res2.error);
         var err = new Error('Invalid URL');
         err.status = 422;

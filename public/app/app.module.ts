@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GroupListComponent } from './group-list.component';
 import { GroupDetailComponent } from './group-detail.component';
+import { ThingDetailComponent } from './thing-detail.component';
 import { MeComponent } from './me.component';
 import { AdminComponent } from './admin.component';
 import { ThingFormComponent } from './thing-form.component';
@@ -19,6 +20,7 @@ import { AuthService } from './auth.service';
 import { GroupService } from './group.service';
 import { ThingService } from './thing.service';
 import { UploadService } from './upload.service';
+import { FacebookPipesModule } from "./facebook-pipes.module";
 
 @NgModule({
   imports: [
@@ -26,7 +28,8 @@ import { UploadService } from './upload.service';
     FormsModule,
     HttpModule,
     NgPipesModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FacebookPipesModule
   ],
   declarations: [
     AppComponent,
@@ -34,6 +37,7 @@ import { UploadService } from './upload.service';
     GroupDetailComponent,
     MeComponent,
     AdminComponent,
+    ThingDetailComponent,
     ThingFormComponent,
     AboutComponent,
     NotFoundComponent
