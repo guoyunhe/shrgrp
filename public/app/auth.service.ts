@@ -8,20 +8,26 @@ import { Friend } from './friend';
 @Injectable()
 export class AuthService {
   private me: Friend;
-  private redirectUrl: string;
-  private groups: Group[] = [];
-  private friends: Friend[] = [];
+  public redirectUrl: string;
 
   constructor(private http: Http) { }
 
   check(): Promise<Friend> {
-    return this.http.get('me').toPromise()
-               .then(response => response.json() as Friend)
-               .catch(this.handleError);
+    if (this.me) {
+      return Promise.resolve(this.me);
+    } else {
+      return this.http.get('me').toPromise()
+                 .then(response => this.me = response.json() as Friend)
+                 .catch(err => this.me = null);
+    }
   }
 
   getLoginUrl(): string {
     return '/auth/facebook?redirect=' + encodeURI(this.redirectUrl);
+  }
+
+  get isLoggedIn(): boolean  {
+    return this.me !== null && this.me._id !== null;
   }
 
   private handleError(error: any): Promise<any> {

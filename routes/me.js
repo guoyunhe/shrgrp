@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var Group = require('../models/group');
 var Friend = require('../models/friend');
+var auth = require('../middlewares/auth');
 
 /* get me */
 router.get('/', function(req, res, next) {
@@ -10,9 +11,13 @@ router.get('/', function(req, res, next) {
     },
 
     'application/json': function(){
-      Friend.findById(req.user._id).populate('groups things').exec(function (err, me) {
-        res.json(me);
-      });
+      if (req.user) {
+        Friend.findById(req.user._id).populate('groups things').exec(function (err, me) {
+          res.json(me);
+        });
+      } else {
+        res.json();
+      }
     },
 
     'default': function() {
@@ -23,7 +28,7 @@ router.get('/', function(req, res, next) {
 });
 
 // share a thing
-router.post('/things', function (req, res, next) {
+router.post('/things', auth, function (req, res, next) {
   req.user.update({ $addToSet: { things: req.body._id } }, function (err, friend) {
     if (err) return next(err);
     res.json({succeed: true});
@@ -31,7 +36,7 @@ router.post('/things', function (req, res, next) {
 });
 
 // unshare a thing
-router.delete('/things/:id', function (req, res, next) {
+router.delete('/things/:id', auth, function (req, res, next) {
   req.user.update({ $pull: { things: req.params.id } }, function (err, friend) {
     if (err) return next(err);
     res.json({succeed: true});

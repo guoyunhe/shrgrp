@@ -23,6 +23,8 @@ import { UploadService } from './upload.service';
 import { FacebookPipesModule } from "./facebook-pipes.module";
 import { FriendListComponent } from "./friend-list.component";
 
+import { AuthGuard } from './auth.guard.service';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -49,7 +51,8 @@ import { FriendListComponent } from "./friend-list.component";
     AuthService,
     Title,
     ThingService,
-    UploadService
+    UploadService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
