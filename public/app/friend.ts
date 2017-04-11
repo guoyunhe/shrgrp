@@ -6,6 +6,6 @@ export class Friend {
   public facebookId: string;
   public name: string;
   public role: string;
-  public groups: Group[] | string[];
-  public things: Thing[] | string[];
+  public groups: Group[] = [];
+  public things: Thing[] = [];
 }

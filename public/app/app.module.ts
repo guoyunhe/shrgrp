@@ -21,6 +21,7 @@ import { GroupService } from './group.service';
 import { ThingService } from './thing.service';
 import { UploadService } from './upload.service';
 import { FacebookPipesModule } from "./facebook-pipes.module";
+import { FriendListComponent } from "./friend-list.component";
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { FacebookPipesModule } from "./facebook-pipes.module";
     AdminComponent,
     ThingDetailComponent,
     ThingFormComponent,
+    FriendListComponent,
     AboutComponent,
     NotFoundComponent
   ],

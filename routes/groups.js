@@ -39,7 +39,7 @@ router.get('/:id', function (req, res, next) {
       } else {
         query = Group.findOne({ slug: req.params.id });
       }
-      query.populate('friends').exec(function (err, group) {
+      query.populate({ path: 'friends', populate: { path: 'things' } }).exec(function (err, group) {
         res.json(group);
       });
     },

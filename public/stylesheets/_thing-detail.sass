@@ -1,0 +1,41 @@
+.thing-list
+  overflow: auto
+  margin: -20px
+
+thing-detail
+  display: block
+  position: relative
+  margin: 20px
+  text-align: center
+
+  @media (min-width: 600px)
+    width: calc(33.3333% - 40px)
+    float: left
+
+  @media (min-width: 900px)
+    width: calc(33.3333% - 40px)
+    float: left
+  
+
+  .thing
+    .icon
+      width: 100px
+      height: 100px
+      margin-right: 10px
+
+  .friends
+    list-style: none
+    height: 50px
+    overflow: hidden
+    padding: 0
+    margin: 5px 0 0 0
+
+    .friend
+      display: inline-block
+      width: 50px
+      padding: 0 5px
+
+      .avatar
+        width: 50px
+        height: 50px
+        border-radius: 99px
