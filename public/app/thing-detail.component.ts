@@ -7,11 +7,11 @@ import { ThingService } from "./thing.service";
 @Component({
   selector: 'thing-detail',
   template: `
-    <div class="thing">
+    <div class="thing" *ngIf="thing">
       <img class="icon" [src]="thing.icon || '/images/ph-icon.svg'" width="100" height="100">
       <div class="name">{{ thing.name | lowercase }}</div>
     </div>
-    <ul class="friends">
+    <ul class="friends" *ngIf="friends && filteredFriends">
       <li class="friend" *ngFor="let f of filteredFriends">
         <a href="https://www.facebook.com/{{ f.facebookId }}" target="_blank">
           <img class="avatar" src="{{ f.facebookId | fbpicture }}"
@@ -47,11 +47,15 @@ export class ThingDetailComponent implements OnInit, DoCheck {
   }
 
   onSharedChange() {
+    // get reference in this.friends array
+    var meInGroup = this.friends.find(f => f._id === this.me._id);
     if (this.shared) {
       this.me.things.push(this.thing);
+      meInGroup.things.push(this.thing);
       this.service.share(this.thing);
     } else {
       this.me.things = this.me.things.filter(t => t._id !== this.thing._id);
+      meInGroup.things = meInGroup.things.filter(t => t._id !== this.thing._id);
       this.service.unshare(this.thing);
     }
   }

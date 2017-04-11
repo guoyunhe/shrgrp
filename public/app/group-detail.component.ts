@@ -16,7 +16,7 @@ import { AuthService } from "./auth.service";
   template: `
     <button (click)="goBack()">back</button>
 
-    <div *ngIf="group">
+    <div *ngIf="group && group.friends && me">
       <h2>{{ group.name | lowercase }} (espoo)</h2>
       <p>
         {{ group?.friends?.length || 0 }} friends are sharing
@@ -51,7 +51,7 @@ export class GroupDetailComponent implements OnInit, DoCheck {
     this.route.params
       .switchMap((params: Params) => this.groupService.getGroup(params['id']))
       .subscribe(group => this.group = group);
-    this.thingService.getThings().then(things => this.things = things).then(console.log);
+    this.thingService.getThings().then(things => this.things = things);
     this.authService.check().then(me => this.me = me);
   }
 
@@ -78,7 +78,6 @@ export class GroupDetailComponent implements OnInit, DoCheck {
         return friend._id === this.me._id;
       });
       this.isMember = matched > -1;
-      this.me = this.group.friends[matched];
     }
   }
 
