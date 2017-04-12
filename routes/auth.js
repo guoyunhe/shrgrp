@@ -7,7 +7,7 @@ var redirect = require('../middlewares/redirect');
 /**
  * facebook oauth
  */
-router.get('/facebook', redirect.parse(), passport.authenticate('facebook'));
+router.get('/facebook', redirect.parser(), passport.authenticate('facebook'));
 
 /**
  * facebook oauth callback
@@ -19,9 +19,9 @@ router.get(
   }),
   function (req, res, next) {
     req.login(req.user, function (err) {
-      next(err);
+      if (err) next(err);
+      next();
     });
-    next();
   },
   redirect.redirect()
 );

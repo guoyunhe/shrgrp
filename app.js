@@ -61,7 +61,6 @@ passport.use(
       Friend.findOrCreate({ facebookId: profile.id }, function (err, friend) {
         friend.facebookToken = accessToken;
         friend.name = profile.displayName;
-        console.log(profile);
         friend.save();
         return callback(err, friend);
       });

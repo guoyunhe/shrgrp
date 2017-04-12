@@ -5,8 +5,13 @@
  */
 module.exports.parse = function (options) {
   return function (req, res, next) {
-    if (req.params.redirect) {
-      req.session.redirect = req.params.redirect;
+    console.log(req.body);
+    console.log(req.params);
+    if (req.body.redirect) {
+      req.session.redirect = req.body.redirect;
+      console.log(req.body.redirect);
+      console.log(req.session.redirect);
+      req.session.save();
     }
     next();
   };
@@ -29,9 +34,9 @@ module.exports.redirect = function (options) {
 
   return function (req, res, next) {
     if (req.session.redirect) {
-      var url = req.session.redirect;
+      res.redirect(req.session.redirect);
       req.session.redirect = null;
-      res.redirect(url); // session will be saved when send or redirect
+      req.session.save();
     } else {
       res.redirect(options.fallback);
     }

@@ -9,6 +9,7 @@ import { AboutComponent } from './about.component';
 import { NotFoundComponent } from './not-found.component';
 
 import { AuthGuard } from './auth.guard.service';
+import { LoginComponent } from "./login.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/groups', pathMatch: 'full' },
@@ -16,7 +17,7 @@ const routes: Routes = [
   { path: 'groups/:id', component: GroupDetailComponent, canLoad: [AuthGuard], canActivate: [AuthGuard] },
   { path: 'me', component: MeComponent, canLoad: [AuthGuard] },
   { path: 'admin', component: AdminComponent, canLoad: [AuthGuard] },
-  { path: 'login', component: AboutComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'about', component: AboutComponent },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '/404' }

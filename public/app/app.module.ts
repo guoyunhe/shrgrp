@@ -24,6 +24,7 @@ import { FacebookPipesModule } from "./facebook-pipes.module";
 import { FriendListComponent } from "./friend-list.component";
 
 import { AuthGuard } from './auth.guard.service';
+import { LoginComponent } from "./login.component";
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { AuthGuard } from './auth.guard.service';
     ThingDetailComponent,
     ThingFormComponent,
     FriendListComponent,
+    LoginComponent,
     AboutComponent,
     NotFoundComponent
   ],

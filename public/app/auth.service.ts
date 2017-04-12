@@ -31,7 +31,11 @@ export class AuthService {
    * to session and execute redirect after OAuth callback.
    */
   get loginUrl(): string {
-    return '/auth/facebook?redirect=' + encodeURI(this.redirectUrl);
+    if (this.redirectUrl) {
+      return '/auth/facebook?redirect=' + encodeURI(this.redirectUrl);
+    } else {
+      return '/auth/facebook';
+    }
   }
 
   get isLoggedIn(): boolean {
