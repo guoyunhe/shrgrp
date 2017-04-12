@@ -8,7 +8,12 @@ import { AuthService } from './auth.service';
   selector: 'me',
   template: `
     <div *ngIf="me">
-      {{ me.name | lowercase }}
+      <h1>hi, {{ me.name | lowercase }}</h1>
+
+
+      <p>
+        <button (click)="logout()">logout</button>
+      </p>
     </div>
   `,
   providers: [AuthService]
@@ -24,5 +29,9 @@ export class MeComponent implements OnInit {
   ngOnInit() {
     this.service.check().then(me => this.me = me);
     this.title.setTitle('me @ shrgrp');
+  }
+
+  logout() {
+    this.service.logout().then(response => location.href = '/');
   }
 }

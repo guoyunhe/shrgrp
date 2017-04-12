@@ -2,21 +2,33 @@
 
 var router = require('express').Router();
 var passport = require('passport');
+var redirect = require('../middlewares/redirect');
 
-// Define routes.
-router.get('/facebook', passport.authenticate('facebook'));
+/**
+ * facebook oauth
+ */
+router.get('/facebook', redirect.parse(), passport.authenticate('facebook'));
 
+/**
+ * facebook oauth callback
+ */
 router.get(
-    '/facebook/callback',
-    passport.authenticate('facebook', {
-        failureRedirect: '/login'
-    }),
-    function(req, res) {
-        req.login(req.user, function(err){
-            if(err) return next(err);
-            res.redirect('/');
-        });
-    }
+  '/facebook/callback',
+  passport.authenticate('facebook', {
+    failureRedirect: '/login'
+  }),
+  function (req, res, next) {
+    req.login(req.user, function (err) {
+      next(err);
+    });
+    next();
+  },
+  redirect.redirect()
 );
+
+router.post('/logout',  function (req, res, next) {
+  req.logout();
+  next();
+});
 
 module.exports = router;
