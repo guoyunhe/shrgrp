@@ -5,12 +5,14 @@
  */
 module.exports.parse = function (options) {
   return function (req, res, next) {
-    console.log(req.body);
-    console.log(req.params);
-    if (req.body.redirect) {
-      req.session.redirect = req.body.redirect;
-      console.log(req.body.redirect);
-      console.log(req.session.redirect);
+    var url;
+    // as 'get' query parameter
+    if (req.query.redirect) url = req.query.redirect;
+    // as 'post', 'put', 'patch', 'delete' query parameter
+    if (req.body.redirect) url = req.body.redirect;
+    // save redirect url to session
+    if (url) {
+      req.session.redirect = url;
       req.session.save();
     }
     next();
