@@ -39,7 +39,11 @@ export class AuthService {
   }
 
   get isLoggedIn(): boolean {
-    return this.me !== null && this.me._id !== null;
+    if (this.me) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /**
