@@ -8,12 +8,6 @@ html(lang='en')
     link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Titillium+Web')
     link(rel='stylesheet', href='/node_modules/normalize.css/normalize.css')
     link(rel='stylesheet', href='/stylesheets/app.css')
-
-    script(src='/node_modules/core-js/client/shim.min.js')
-    script(src='/node_modules/zone.js/dist/zone.js')
-    script(src='/node_modules/systemjs/dist/system.src.js')
-    script(src='/systemjs.config.js')
-    script System.import('main.js').catch(function(err){ console.error(err); });
   body
     header#header
 
@@ -29,3 +23,10 @@ html(lang='en')
       ul.links
         li: a(href='https://fb.me/shrgrp.org', target='_blank') like us
         li: a(href='https://m.me/shrgrp.org', target='_blank') contact us
+
+    //- Put scripts at end to avoid blocking content rendering
+    script(src='/node_modules/core-js/client/shim.min.js')
+    script(src='/node_modules/zone.js/dist/zone.js')
+    script(src='/node_modules/systemjs/dist/system.src.js')
+    script(src='/systemjs.config.js')
+    script System.import('main.js').catch(function(err){ console.error(err); });
