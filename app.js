@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var compression = require('compression');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var MongoStore = require('connect-mongo')(session);
@@ -23,7 +24,7 @@ mongoose.connect(dburi);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-// uncomment after placing your favicon in /public
+app.use(compression());
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
