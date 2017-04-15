@@ -30,6 +30,19 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 /**
+ * Set user and group of Node process
+ *
+ * To listen on 80 port, you have to use root to start Node. However, this is
+ * not safe. So after listening to 80 port, we immediately switch back to
+ * non-root user.
+ *
+ * NOTE: process.setgit() must be done before process.setuid()
+ */
+
+if (process.env.GROUP) process.setgid(process.env.GROUP);
+if (process.env.USER) process.setuid(process.env.USER);
+
+/**
  * Normalize a port into a number, string, or false.
  */
 
