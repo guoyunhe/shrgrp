@@ -55,7 +55,7 @@ passport.use(
   new FacebookStrategy({
     clientID: config.facebook.app_id,
     clientSecret: config.facebook.app_secret,
-    callbackURL: 'http://localhost:3000/auth/facebook/callback'
+    callbackURL: config.web.url + '/auth/facebook/callback'
   },
     function (accessToken, refreshToken, profile, callback) {
       Friend.findOrCreate({ facebookId: profile.id }, function (err, friend) {
