@@ -6,13 +6,15 @@ html(lang='en')
     base(href='/')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='/stylesheets/app.css')
+    link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Titillium+Web:300,400')
   body
     header#header
 
       a.logo-wrap(href='/'): img.logo(src='/images/logo.svg', width=128, height=128)
 
-      h1.name: a(href='/') shrgrp
-      div.desc share things &amp; make friends
+      .text-wrap
+        .name: a(href='/') shrgrp
+        .desc share things &amp; make friends
 
     block content
 

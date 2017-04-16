@@ -10,8 +10,8 @@ enableProdMode();
 
 platformBrowserDynamic().bootstrapModule(AppModule);
 
-WebFont.load({
-  google: {
-    families: ['Titillium Web']
-  }
-});
+// WebFont.load({
+//   google: {
+//     families: ['Titillium Web']
+//   }
+// });

@@ -1,10 +1,22 @@
+$header-height: 200px
+$footer-height: 200px
+
 @import 'reset'
+@import 'input'
+@import 'header'
+@import 'footer'
+
+@import 'navbar'
+
+html
+  min-height: 100%
 
 body
   padding: 0
   font-size: 18px
   font-family: 'Titillium Web', sans-serif
   background: #fff
+  min-height: 100%
 
 h1, h2, h3, h4, h5, h6
   font-weight: normal
@@ -12,19 +24,16 @@ h1, h2, h3, h4, h5, h6
 a
   color: #00B7FF
 
-.container
+app
+  display: block
   max-width: 720px
   padding: 0 10px
   margin: auto
+  min-height: 400px
 
 group-list
   ul
     li.active
       background: #ddd
-
-@import 'input'
-@import 'header'
-@import 'footer'
-@import 'navbar'
 
 @import 'thing-detail'
