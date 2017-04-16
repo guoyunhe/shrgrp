@@ -44,6 +44,16 @@ export class GroupService {
         .catch(this.handleError);
   }
 
+  createGroupFromFacebookUrl(url: String): Promise<Group> {
+    return this.http.post('/groups', {url: url}).toPromise().then(response => response.json() as Group)
+               .catch(error => null);
+  }
+
+  deleteGroup(group: Group): Promise<boolean> {
+    return this.http.delete('/groups/' + group._id).toPromise().then(response => true)
+               .catch(error => false);
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);

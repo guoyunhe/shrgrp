@@ -129,4 +129,13 @@ router.post('/', function (req, res, next) {
 
 });
 
+// delete a group
+router.delete('/:id', function (req, res, next) {
+  Group.findByIdAndRemove(req.params.id, function (err, group) {
+    if (err) return next(err);
+
+    res.json({succeed: true});
+  });
+});
+
 module.exports = router;

@@ -27,18 +27,16 @@ import { GroupService } from "./group.service";
 
     <h2>groups</h2>
 
+    <form>
+      <input type="text" name="url" [(ngModel)]="newGroupFacebookUrl" placeholder="facebook group url">
+      <button (click)="createGroup()">new</button>
+    </form>
+
     <p *ngFor="let group of groups">
       {{ group.name | lowercase }}
       <button (click)="editGroup(group)">edit</button>
       <button (click)="deleteGroup(group)">delete</button>
     </p>
-
-    form#group-create-form(action='/groups', method='post')
-      label url of facebook group
-      input(name='url')
-      button(type='submit') create
-
-    <h2>friends</h2>
   `
 })
 export class AdminComponent {
@@ -50,6 +48,7 @@ export class AdminComponent {
 
   private group: Group;
   private groups: Group[];
+  private newGroupFacebookUrl: string;
 
   constructor(
     private auth: AuthService,
@@ -93,5 +92,17 @@ export class AdminComponent {
       this.things = this.things.filter(function (e) { return e !== thing});
       thing = null; // if it is referenced, set all of them to null
     }
+  }
+
+  createGroup() {
+    this.groupService.createGroupFromFacebookUrl(this.newGroupFacebookUrl)
+        .then(group => {
+          this.groups.push(group);
+          this.newGroupFacebookUrl = null;
+        });
+  }
+
+  deleteGroup(group: Group) {
+    this.groupService.deleteGroup(group).then(succeed => this.groups = this.groups.filter(g => g._id !== group._id));
   }
 }
