@@ -65,7 +65,7 @@ export class AdminComponent {
   createThing() {
     var lastThing = this.things[this.things.length-1];
 
-    if (lastThing._id) {
+    if (lastThing && lastThing._id) {
       // if last thing have been saved
       this.thing = new Thing();
       this.things.push(this.thing);
