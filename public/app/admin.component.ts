@@ -63,14 +63,12 @@ export class AdminComponent {
   }
 
   createThing() {
-    if (!this.things) {
-      this.things = [];
-    } else {
+    if (this.things) {
       var lastThing = this.things[this.things.length-1];
     }
 
-    if (lastThing && lastThing._id) {
-      // if last thing have been saved
+    if (!lastThing || lastThing._id) {
+      // if no last thing, or last thing have been saved
       this.thing = new Thing();
       this.things.push(this.thing);
     } else {
