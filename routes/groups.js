@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var fb = require('fb');
+var _ = require('underscore');
 var config = require('../config');
 var Group = require('../models/group');
 
@@ -101,9 +102,12 @@ router.post('/', function (req, res, next) {
         Group.findOrCreate({ facebookId: res2.id }, function (err, group) {
           if (!group.name) {
             group.name = res2.name;
-            group.save();
+            group.save(function (err, group) {
+              res.json(group);
+            });
+          } else {
+            res.json(group);
           }
-          res.redirect('/groups/' + group.id);
         });
       }
     });
@@ -119,9 +123,12 @@ router.post('/', function (req, res, next) {
         Group.findOrCreate({ facebookId: res2.data[0].id }, function (err, group) {
           if (!group.name) {
             group.name = res2.data[0].name;
-            group.save();
+            group.save(function (err, group) {
+              res.json(group);
+            });
+          } else {
+            res.json(group);
           }
-          res.redirect('/groups/' + group.id);
         });
       }
     });
@@ -131,10 +138,18 @@ router.post('/', function (req, res, next) {
 
 // update a group (patch)
 router.patch('/:id', function (req, res, next) {
-  Group.findByIdAndUpdate(req.params.id, req.body, function (err, group) {
-    if (err) return next(err);
-
-    res.json(group);
+  /**
+   * note: use save() instead of update() or findByIdAndUpdate().
+   * otherwise, slug won't be updated. update() is directly database
+   * operation that doesn't call any plugin pre, post events.
+   */
+  Group.findById(req.params.id, function (err, group) {
+    if (err) return res.status(404).send('not found');
+    var data = _.pick(req.body, 'name', 'cover', 'facebookId');
+    group = _.extend(group, data);
+    group.save(function (err, group) {
+      res.json(group);
+    });
   });
 });
 

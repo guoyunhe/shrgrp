@@ -11,6 +11,6 @@ var Group = new Schema({
 });
 
 Group.plugin(findOrCreate);
-Group.plugin(slug('name'));
+Group.plugin(slug('name', {update: true}));
 
 module.exports = mongoose.model('Group', Group);

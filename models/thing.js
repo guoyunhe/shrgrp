@@ -10,6 +10,6 @@ var Thing = new Schema({
   friends: [{ type: Schema.Types.ObjectId, ref: 'Friend' }]
 });
 
-Thing.plugin(slug('name'));
+Thing.plugin(slug('name', {update: true}));
 
 module.exports = mongoose.model('Thing', Thing);
