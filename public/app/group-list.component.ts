@@ -8,10 +8,9 @@ import { GroupService } from './group.service';
 @Component({
   selector: 'group-list',
   template: `
-    <p *ngFor="let group of groups">
-      <a routerLink="/groups/{{group.slug}}">{{ group.name | lowercase }}</a>
-       , espoo
-    </p>
+    <div class="group" *ngFor="let group of groups">
+      <a routerLink="/groups/{{group.slug}}" [style.background]="'url(' + group.cover + ')'">{{ group.name | lowercase }}</a>
+    </div>
     `,
   providers: [GroupService]
 })

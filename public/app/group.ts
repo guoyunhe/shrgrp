@@ -4,6 +4,7 @@ export class Group {
   public facebookId: string;
   public name: string;
   public slug: string;
+  public cover: string;
   public friends: Friend[];
 
   constructor() { }

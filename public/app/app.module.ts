@@ -25,6 +25,7 @@ import { FriendListComponent } from "./friend-list.component";
 
 import { AuthGuard } from './auth.guard.service';
 import { LoginComponent } from "./login.component";
+import { GroupFormComponent } from "./group-form.component";
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { LoginComponent } from "./login.component";
     AppComponent,
     GroupListComponent,
     GroupDetailComponent,
+    GroupFormComponent,
     MeComponent,
     AdminComponent,
     ThingDetailComponent,

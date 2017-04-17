@@ -47,11 +47,12 @@ router.post('/', upload.single('file'), function (req, res, next) {
         imageminPngquant({quality: '65-80'}),
         imageminSvgo()
       ]
-    }).then(files => true);
-    res.send({
-      filename: req.file.filename,
-      path: '/uploads/' + req.file.filename,
-      url: config.url + '/uploads/' + req.file.filename
+    }).then(files => {
+      res.send({
+        filename: req.file.filename,
+        path: '/uploads/' + req.file.filename,
+        url: config.url + '/uploads/' + req.file.filename
+      });
     });
   } else {
     res.status(400).send({ message: 'invalid file. make sure file format is correct. (.jpg, .png or .svg)' });

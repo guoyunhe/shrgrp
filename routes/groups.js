@@ -129,6 +129,15 @@ router.post('/', function (req, res, next) {
 
 });
 
+// update a group (patch)
+router.patch('/:id', function (req, res, next) {
+  Group.findByIdAndUpdate(req.params.id, req.body, function (err, group) {
+    if (err) return next(err);
+
+    res.json(group);
+  });
+});
+
 // delete a group
 router.delete('/:id', function (req, res, next) {
   Group.findByIdAndRemove(req.params.id, function (err, group) {

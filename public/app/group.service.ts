@@ -49,6 +49,18 @@ export class GroupService {
                .catch(error => null);
   }
 
+  createGroup(group: Group): Promise<Group> {
+    return this.http.post('/groups', group).toPromise()
+               .then(response => response.json() as Group)
+               .catch(error => null);
+  }
+
+  updateGroup(group: Group): Promise<Group> {
+    return this.http.patch('/groups/' + group._id, group).toPromise()
+               .then(response => response.json() as Group)
+               .catch(error => null);
+  }
+
   deleteGroup(group: Group): Promise<boolean> {
     return this.http.delete('/groups/' + group._id).toPromise().then(response => true)
                .catch(error => false);

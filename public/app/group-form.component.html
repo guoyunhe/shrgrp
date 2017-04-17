@@ -1,35 +1,29 @@
-<div *ngIf="group" [hidden]="!open">
+<div *ngIf="group && open ">
 
-  <h1 *ngIf="group._id">edit {{ group.name | lowercase }}</h1>
-  <h1 *ngIf="!group._id">create new</h1>
+  <h1 *ngIf="group._id">edit {{ group.name | lowercase }} group</h1>
+  <h1 *ngIf="!group._id">create new group</h1>
 
   <form (ngSubmit)="onSubmit()" #groupForm="ngForm">
 
     <div class="form-group">
-      <label for="name">name</label>
-      <input type="text" class="form-control" id="name" required [(ngModel)]="group.name" name="name" #name="ngModel">
-      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+      <label>name</label>
+      <input type="text" required [(ngModel)]="group.name" name="name" #name="ngModel">
+      <div [hidden]="name.valid || name.pristine" class="alert">
         name is required
       </div>
     </div>
 
     <div class="form-group">
-      <label for="name">facebook group</label>
-      <input type="text" class="form-control" id="name" required [(ngModel)]="group.name" name="name" #name="ngModel">
-      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
-        name is required
-      </div>
+      <label>facebook group id</label>
+      <input type="text" [(ngModel)]="group.facebookId" name="facebook_id" #fbid="ngModel">
     </div>
 
     <div class="form-group">
-      <label for="url">facebook group url</label>
-      <input type="text" class="form-control" id="name" required [(ngModel)]="group.name" name="name" #name="ngModel">
-      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
-        name is required
-      </div>
+      <label>icon</label>
+      <input type="file" (change)="upload($event)">
+      <img width="400" height="150" [src]="group.cover || '/images/ph-cover.svg'">
     </div>
 
-
-    <button type="submit" class="btn btn-success" [disabled]="!groupForm.form.valid">submit</button>
+    <button type="submit" [disabled]="!groupForm.form.valid">submit</button>
   </form>
 </div>

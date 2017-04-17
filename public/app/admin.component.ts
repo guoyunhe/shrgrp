@@ -37,6 +37,8 @@ import { GroupService } from "./group.service";
       <button (click)="editGroup(group)">edit</button>
       <button (click)="deleteGroup(group)">delete</button>
     </p>
+
+    <group-form [group]="group" [open]="groupFormOpen"></group-form>
   `
 })
 export class AdminComponent {
@@ -49,6 +51,7 @@ export class AdminComponent {
   private group: Group;
   private groups: Group[];
   private newGroupFacebookUrl: string;
+  private groupFormOpen: boolean = false;
 
   constructor(
     private auth: AuthService,
@@ -102,6 +105,11 @@ export class AdminComponent {
           this.groups.push(group);
           this.newGroupFacebookUrl = null;
         });
+  }
+
+  editGroup(group: Group) {
+    this.group = group;
+    this.groupFormOpen = true;
   }
 
   deleteGroup(group: Group) {
