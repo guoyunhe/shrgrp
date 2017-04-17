@@ -44,7 +44,8 @@ router.post('/', upload.single('file'), function (req, res, next) {
     imagemin([req.file.path], uploadPath, {
       plugins: [
         imageminJpegtran(),
-        imageminPngquant({quality: '65-80'})
+        imageminPngquant({quality: '65-80'}),
+        imageminSvgo()
       ]
     }).then(files => true);
     res.send({
