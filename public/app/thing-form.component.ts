@@ -15,7 +15,7 @@ export class ThingFormComponent {
   // a trick to open / close form
   // open: pass a new random number from parent component to trigger
   // close: set to 0 in this component
-  @Input() public open: number = 0; 
+  @Input() public open: number = 0;
 
   constructor(
     private service: ThingService,
@@ -39,7 +39,7 @@ export class ThingFormComponent {
 
   upload(e: any) {
     var file = e.target.files[0];
-    this.uploadService.upload(file, '/uploads/svg').then(upload => this.thing.icon = upload.path);
+    this.uploadService.upload(file).then(upload => this.thing.icon = upload.path);
   }
 
 }

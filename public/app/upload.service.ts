@@ -9,10 +9,10 @@ export class UploadService {
 
   constructor(private http: Http) { }
 
-  upload(file: File, path: string): Promise<Upload> {
+  upload(file: File): Promise<Upload> {
     var data = new FormData();
     data.append('file', file);
-    return this.http.post(path, data).toPromise()
+    return this.http.post('/uploads', data).toPromise()
                .then(response => response.json() as Upload)
                .catch(this.handleError);
   }
