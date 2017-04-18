@@ -8,12 +8,23 @@ import { AuthService } from './auth.service';
   selector: 'me',
   template: `
     <div *ngIf="me">
-      <h1>hi, {{ me.name | lowercase }}</h1>
+      <header class="me-header">
+        <img src="{{ me.facebookId | fbpicture }}">
+        <h1 class="title">{{ me.name | lowercase }}</h1>
+        <p>
+          <button (click)="logout()">logout</button>
+        </p>
+      </header>
 
+      <h2>groups i joined</h2>
 
-      <p>
-        <button (click)="logout()">logout</button>
-      </p>
+      <div class="group-list">
+        <a class="group" *ngFor="let group of me.groups"
+          routerLink="/groups/{{group.slug}}"
+          [style.background-image]="'url(' + group.cover + ')'">
+          <div class="name">{{ group.name | lowercase }}</div>
+        </a>
+      </div>
     </div>
   `,
   providers: [AuthService]
