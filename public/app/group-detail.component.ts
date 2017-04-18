@@ -14,20 +14,34 @@ import { AuthService } from "./auth.service";
 @Component({
   selector: 'group-detail',
   template: `
-    <button (click)="goBack()">back</button>
-
     <div *ngIf="group && group.friends && me">
-      <h2>{{ group.name | lowercase }} (espoo)</h2>
-      <p>
-        {{ group?.friends?.length || 0 }} friends are sharing
-        <button *ngIf="!isMember" type="button" (click)="join()">join</button>
-        <button *ngIf="isMember" type="button" (click)="quit()">quit</button>
-      </p>
-      <div class="thing-list">
-        <thing-detail *ngFor="let thing of things" [thing]="thing"
-                      [friends]="group.friends"
-                      [canShare]="isMember" [me]="me"></thing-detail>
+      <h1 class="title">{{ group.name | lowercase }}</h1>
+
+      <div class="help">
+        <p>
+          <strong>how to share</strong>: click the "share" button under things you want to share
+        </p>
+        <p>
+          <strong>how to borrow</strong>: click avatars and then contact them through facebook message
+        </p>
       </div>
+
+      <div class="thing-list-wrap">
+        <div class="thing-list" [class.blur]="!isMember">
+          <thing-detail *ngFor="let thing of things" [thing]="thing"
+                        [friends]="group.friends"
+                        [canShare]="isMember" [me]="me"></thing-detail>
+        </div>
+        <div class="please-join" [hidden]="isMember">
+          <p>join the community, share with your neighbors</p>
+          <button type="button" (click)="join()">join</button>
+        </div>
+      </div>
+
+      <p *ngIf="isMember">
+        if you are not living in {{ group.name | lowercase }} anymore, click this button:
+        <button type="button" (click)="quit()">quit</button>
+      </p>
     </div>
   `,
   providers: [GroupService, ThingService, AuthService]

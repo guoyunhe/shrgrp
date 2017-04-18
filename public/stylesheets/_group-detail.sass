@@ -1,0 +1,41 @@
+group-detail
+  display: block
+
+  h1.title
+    font-size: 48px
+    font-weight: 200
+    text-align: center
+
+
+  .thing-list-wrap
+    position: relative
+
+  .thing-list
+    display: flex
+    flex-wrap: wrap
+    margin: 0 -10px
+
+    &.blur
+      filter: blur(5px)
+
+  .please-join
+    position: absolute
+    left: 0
+    right: 0
+    top: 0
+    bottom: 0
+    padding-top: 40px
+    text-align: center
+
+    button
+      background: rgba(41, 183, 41, 0.8)
+      border: none
+      color: #ffffff
+      cursor: pointer
+      font-size: 20px
+      font-weight: 700
+      padding: 6px 12px
+      width: 100px
+      border-radius: 99px
+
+// see _thing-detail.sass

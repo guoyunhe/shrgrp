@@ -11,17 +11,23 @@ import { ThingService } from "./thing.service";
       <img class="icon" [src]="thing.icon || '/images/ph-icon.svg'" width="100" height="100">
       <div class="name">{{ thing.name | lowercase }}</div>
     </div>
-    <ul class="friends" *ngIf="friends && filteredFriends">
-      <li class="friend" *ngFor="let f of filteredFriends">
+
+    <div *ngIf="!filteredFriends.length">no friend shares this yet</div>
+    <div *ngIf="filteredFriends.length === 1">a friend is sharing this</div>
+    <div *ngIf="filteredFriends.length > 1">{{ filteredFriends.length }} friends are sharing this</div>
+
+    <div class="friends">
+      <div class="friend" *ngFor="let f of filteredFriends">
         <a href="https://www.facebook.com/{{ f.facebookId }}" target="_blank">
           <img class="avatar" src="{{ f.facebookId | fbpicture }}"
                width="100" height="100" title="{{ f.name | lowercase }}">
         </a>
-      </li>
-    </ul>
-    <label *ngIf="canShare">
+      </div>
+    </div>
+
+    <label *ngIf="canShare" class="share-this" [class.active]="shared">
       <input type="checkbox" [(ngModel)]="shared" (change)="onSharedChange()"/>
-      share this
+      {{ shared ? 'i am sharing' : 'share' | lowercase }}
     </label>
   `,
   providers: []

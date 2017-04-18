@@ -1,34 +1,28 @@
-.thing-list
-  overflow: auto
-  margin: -20px
-
 thing-detail
   display: block
   position: relative
-  margin: 20px
+  flex: 1 1 200px
+  margin-bottom: 20px
+  padding: 10px
   text-align: center
-
-  @media (min-width: 600px)
-    width: calc(33.3333% - 40px)
-    float: left
-
-  @media (min-width: 900px)
-    width: calc(33.3333% - 40px)
-    float: left
-  
 
   .thing
     .icon
+      display: block
       width: 100px
       height: 100px
-      margin-right: 10px
+      margin: 0 auto 20px auto
+
+    .name
+      border-top: 1px dashed #000
+      border-bottom: 1px dashed #000
 
   .friends
     list-style: none
     height: 50px
     overflow: hidden
     padding: 0
-    margin: 5px 0 0 0
+    margin: 10px 0
 
     .friend
       display: inline-block
@@ -39,3 +33,17 @@ thing-detail
         width: 50px
         height: 50px
         border-radius: 99px
+
+  .share-this
+    display: block
+    padding: 3px 6px
+    border-radius: 3px
+    cursor: pointer
+    background: #eeeeee
+
+    &.active
+      background: #5fb32c
+      color: #fff
+
+    input
+      display: none
