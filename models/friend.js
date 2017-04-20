@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var passportLocalMongoose = require('passport-local-mongoose');
 var findOrCreate = require('mongoose-findorcreate');
 var Thing = require('./thing');
 var Group = require('./group');

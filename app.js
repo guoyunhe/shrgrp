@@ -9,7 +9,6 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 
 var config = require('./config');
@@ -51,7 +50,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // passport config
-passport.use(new LocalStrategy(Friend.authenticate()));
 passport.use(
   new FacebookStrategy({
     clientID: config.facebook.app_id,
@@ -67,8 +65,6 @@ passport.use(
       });
     })
 );
-//passport.serializeUser(Friend.serializeUser());
-//passport.deserializeUser(Friend.deserializeUser());
 passport.serializeUser(function (friend, done) {
   done(null, friend.id);
 });
