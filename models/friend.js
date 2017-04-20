@@ -14,7 +14,6 @@ var Friend = new Schema({
   groups: [{ type: Schema.Types.ObjectId, ref: 'Group' }]
 });
 
-Friend.plugin(passportLocalMongoose);
 Friend.plugin(findOrCreate);
 
 // 320x320px avatar from Facebook
