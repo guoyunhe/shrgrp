@@ -88,6 +88,10 @@ app.use('/admin', require('./routes/admin'));
 app.use('/about', require('./routes/about'));
 app.use('/auth', require('./routes/auth'));
 
+app.get('/login', function (req, res) {
+    res.render('index');
+});
+
 // 404 not found, let front-end do the job
 app.get('/404', function (req, res) {
   res.status(404);
