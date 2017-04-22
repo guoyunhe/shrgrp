@@ -38,10 +38,20 @@ import { AuthService } from "./auth.service";
         </div>
       </div>
 
-      <p *ngIf="isMember">
-        if you are not living in {{ group.name | lowercase }} anymore, click this button:
-        <button type="button" (click)="quit()">quit</button>
+      <p>
+        <span *ngIf="group.friends.length > 1">{{ group?.friends?.length }} friends have joined {{ group.name | lowercase }}</span>
+        <span *ngIf="group.friends.length === 1">one friend has joined {{ group.name | lowercase }}</span>
+        <button *ngIf="isMember" type="button" (click)="quit()">quit</button>
       </p>
+
+      <div class="friends">
+        <div class="friend" *ngFor="let f of group.friends">
+          <a href="https://www.facebook.com/{{ f.facebookId }}" target="_blank">
+            <img class="avatar" src="{{ f.facebookId | fbpicture }}"
+                width="100" height="100" title="{{ f.name | lowercase }}">
+          </a>
+        </div>
+      </div>
     </div>
   `,
   providers: [GroupService, ThingService, AuthService]
