@@ -12,6 +12,11 @@ import { ThingService } from "./thing.service";
       <div class="name">{{ thing.name | lowercase }}</div>
     </div>
 
+    <label *ngIf="canShare" class="share-this" [class.active]="shared">
+      <input type="checkbox" [(ngModel)]="shared" (change)="onSharedChange()"/>
+      {{ shared ? 'i am sharing' : 'share' | lowercase }}
+    </label>
+
     <div *ngIf="!filteredFriends.length">no friend shares this yet</div>
     <div *ngIf="filteredFriends.length === 1">a friend is sharing this</div>
     <div *ngIf="filteredFriends.length > 1">{{ filteredFriends.length }} friends are sharing this</div>
@@ -24,11 +29,6 @@ import { ThingService } from "./thing.service";
         </a>
       </div>
     </div>
-
-    <label *ngIf="canShare" class="share-this" [class.active]="shared">
-      <input type="checkbox" [(ngModel)]="shared" (change)="onSharedChange()"/>
-      {{ shared ? 'i am sharing' : 'share' | lowercase }}
-    </label>
   `,
   providers: []
 })
