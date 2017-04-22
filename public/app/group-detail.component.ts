@@ -46,8 +46,7 @@ import { AuthService } from "./auth.service";
 
       <div class="friend-list">
         <a class="friend" *ngFor="let f of group.friends" href="https://www.facebook.com/{{ f.facebookId }}" target="_blank">
-          <img class="avatar" src="{{ f.facebookId | fbpicture }}"
-              width="100" height="100" title="{{ f.name | lowercase }}">
+          <img class="avatar" src="{{ f.facebookId | fbpicture }}" title="{{ f.name | lowercase }}">
         </a>
       </div>
     </div>
