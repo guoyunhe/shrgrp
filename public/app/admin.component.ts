@@ -32,11 +32,13 @@ import { GroupService } from "./group.service";
       <button (click)="createGroup()">new</button>
     </form>
 
-    <p *ngFor="let group of groups">
+    <div *ngFor="let group of groups">
       {{ group.name | lowercase }}
       <button (click)="editGroup(group)">edit</button>
       <button (click)="deleteGroup(group)">delete</button>
-    </p>
+      <br>
+      <a *ngFor="let friend of group.friends" href="http://www.facebook.com/{{ friend.facebookId }}">{{ friend }}</a>
+    </div>
 
     <group-form [group]="group" [open]="groupFormOpen"></group-form>
   `
