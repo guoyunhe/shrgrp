@@ -21,7 +21,7 @@ export class AdminComponent {
   private group: Group;
   private groups: Group[];
   private newGroupFacebookUrl: string;
-  private groupFormOpen: boolean = false;
+  private groupFormOpen: number = 0;
 
   constructor(
     private auth: AuthService,
@@ -79,7 +79,7 @@ export class AdminComponent {
 
   editGroup(group: Group) {
     this.group = group;
-    this.groupFormOpen = true;
+    this.groupFormOpen = Date.now();
   }
 
   deleteGroup(group: Group) {

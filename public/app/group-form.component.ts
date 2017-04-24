@@ -15,7 +15,7 @@ export class GroupFormComponent {
   // a trick to open / close form
   // open: pass a new random number from parent component to trigger
   // close: set to 0 in this component
-  @Input() public open: boolean = false;
+  @Input() public open: number = 0;
 
   private cities = ['helsinki', 'espoo', 'vantaa'];
 
@@ -28,13 +28,13 @@ export class GroupFormComponent {
     if (this.group._id) {
       this.groupService.updateGroup(this.group).then(group => {
         this.group.slug = group.slug; // feed model with slug back to parent component
-        this.open = false;
+        this.open = 0;
       });
     } else {
       this.groupService.createGroup(this.group).then(group => {
         this.group._id = group._id; // feed model with _id and slug back to parent component
         this.group.slug = group.slug;
-        this.open = false;
+        this.open = 0;
       });
     }
   }
