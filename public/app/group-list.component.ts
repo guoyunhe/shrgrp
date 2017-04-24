@@ -61,7 +61,6 @@ export class GroupListComponent implements OnInit, DoCheck {
         search.addIndex('desc');
         search.addDocuments(groupsFilteredByCity);
         this.filteredGroups = search.search(this.search);
-        console.log(this.filteredGroups);
       } else {
         this.filteredGroups = groupsFilteredByCity;
       }
