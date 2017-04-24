@@ -1,3 +1,5 @@
+/// <reference path="./js-search.d.ts" />
+
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -60,7 +62,7 @@ export class GroupListComponent implements OnInit, DoCheck {
         search.addIndex('name');
         search.addIndex('desc');
         search.addDocuments(groupsFilteredByCity);
-        this.filteredGroups = search.search(this.search);
+        this.filteredGroups = <Group[]>search.search(this.search);
       } else {
         this.filteredGroups = groupsFilteredByCity;
       }
