@@ -14,7 +14,11 @@
     "sourceMap": true,
     "typeRoots": [
       "../node_modules/@types/"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "js-search": ["../node_modules/js-search/dist/umd/js-search.min.js"]
+    }
   },
   "compileOnSave": true,
   "exclude": [

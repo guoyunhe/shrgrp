@@ -51,6 +51,7 @@
     "imagemin-pngquant": "^5.0.0",
     "imagemin-svgo": "^5.2.1",
     "jquery": "^3.2.1",
+    "js-search": "^1.4.0",
     "mongodb": "^2.2.25",
     "mongoose": "^4.9.2",
     "mongoose-findorcreate": "^1.0.1",

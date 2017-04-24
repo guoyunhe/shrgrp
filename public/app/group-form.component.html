@@ -1,29 +1,38 @@
-<div *ngIf="group && open ">
+<form *ngIf="group && open" (ngSubmit)="onSubmit()" #groupForm="ngForm">
 
-  <h1 *ngIf="group._id">edit {{ group.name | lowercase }} group</h1>
-  <h1 *ngIf="!group._id">create new group</h1>
+  <h3 *ngIf="group._id">edit {{ group.name | lowercase }} group</h3>
+  <h3 *ngIf="!group._id">create new group</h3>
 
-  <form (ngSubmit)="onSubmit()" #groupForm="ngForm">
-
-    <div class="form-group">
-      <label>name</label>
-      <input type="text" required [(ngModel)]="group.name" name="name" #name="ngModel">
-      <div [hidden]="name.valid || name.pristine" class="alert">
-        name is required
-      </div>
+  <div class="form-group">
+    <label>name</label>
+    <input type="text" required [(ngModel)]="group.name" name="name" #name="ngModel">
+    <div [hidden]="name.valid || name.pristine" class="alert">
+      name is required
     </div>
+  </div>
 
-    <div class="form-group">
-      <label>facebook group id</label>
-      <input type="text" [(ngModel)]="group.facebookId" name="facebook_id" #fbid="ngModel">
-    </div>
+  <div class="form-group">
+    <label>description</label>
+    <textarea [(ngModel)]="group.desc" name="desc"></textarea>
+  </div>
 
-    <div class="form-group">
-      <label>icon</label>
-      <input type="file" (change)="upload($event)">
-      <img width="400" height="150" [src]="group.cover || '/images/ph-cover.svg'">
-    </div>
+  <div class="form-group">
+    <label>facebook group id</label>
+    <input type="text" [(ngModel)]="group.facebookId" name="facebook_id" #fbid="ngModel">
+  </div>
 
-    <button type="submit" [disabled]="!groupForm.form.valid">submit</button>
-  </form>
-</div>
+  <div class="form-group">
+    <label>icon</label>
+    <input type="file" (change)="upload($event)">
+    <img *ngIf="group.cover" width="400" height="150" [src]="group.cover">
+  </div>
+
+  <div class="form-group">
+    <label for="city">Hero Power</label>
+    <select class="form-control" id="city" required name="city" [(ngModel)]="group.city">
+      <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+    </select>
+  </div>
+
+  <button type="submit" [disabled]="!groupForm.form.valid">submit</button>
+</form>

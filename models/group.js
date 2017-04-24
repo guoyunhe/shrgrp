@@ -5,8 +5,10 @@ var slug = require('mongoose-url-slugs');
 
 var Group = new Schema({
   name: {type: String, default: '', trim: true},
+  desc: String,
   facebookId: String,
   cover: String,
+  city: { type: String, enum: ['helsinki', 'espoo', 'vantaa']},
   friends: [{ type: Schema.Types.ObjectId, ref: 'Friend' }]
 });
 

@@ -89,7 +89,7 @@ app.get('/login', function (req, res) {
 });
 
 // 404 not found, let front-end do the job
-app.get('/404', function (req, res) {
+app.use(function (req, res, next) {
   res.status(404);
   res.format({
     'text/html': function () {
@@ -100,26 +100,6 @@ app.get('/404', function (req, res) {
     },
     'default': function () {
       res.send('not found');
-    }
-  });
-});
-// redirect all unknown routes to 404
-app.use(function (req, res, next) {
-  res.redirect('/404');
-});
-
-// 403 permission denied, let front-end do the job
-app.get('/403', function (req, res) {
-  res.status(403);
-  res.format({
-    'text/html': function () {
-      res.render('index');
-    },
-    'application/json': function () {
-      res.send({ message: 'permission denied' });
-    },
-    'default': function () {
-      res.send('permission denied');
     }
   });
 });

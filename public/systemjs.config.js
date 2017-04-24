@@ -34,7 +34,8 @@
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
       'ngx-pipes': 'npm:ngx-pipes/bundles/bundle.umd.js',
       'jquery': 'npm:jquery/dist/jquery.min.js',
-      'webfontloader': 'npm:webfontloader/webfontloader.js'
+      'webfontloader': 'npm:webfontloader/webfontloader.js',
+      'js-search': 'npm:js-search/dist/umd/js-search.js'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {

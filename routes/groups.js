@@ -145,7 +145,7 @@ router.patch('/:id', function (req, res, next) {
    */
   Group.findById(req.params.id, function (err, group) {
     if (err) return res.status(404).send('not found');
-    var data = _.pick(req.body, 'name', 'cover', 'facebookId');
+    var data = _.pick(req.body, 'name', 'desc', 'cover', 'facebookId', 'city');
     group = _.extend(group, data);
     group.save(function (err, group) {
       res.json(group);

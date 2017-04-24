@@ -17,6 +17,8 @@ export class GroupFormComponent {
   // close: set to 0 in this component
   @Input() public open: boolean = false;
 
+  private cities = ['helsinki', 'espoo', 'vantaa'];
+
   constructor(
     private groupService: GroupService,
     private uploadService: UploadService

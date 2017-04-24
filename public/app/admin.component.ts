@@ -9,39 +9,7 @@ import { GroupService } from "./group.service";
 
 @Component({
   selector: 'admin',
-  template: `
-    <h1>admin panel</h1>
-
-    <h2>things</h2>
-
-    <p *ngFor="let thing of things" [hidden]="!thing._id">
-      <img width="50" height="50" [src]="thing.icon || '/images/ph-icon.svg'">
-      {{ thing.name | lowercase }}
-      <button (click)="editThing(thing)">edit</button>
-      <button (click)="deleteThing(thing)">delete</button>
-    </p>
-
-    <button (click)="createThing()">new</button>
-
-    <thing-form [thing]="thing" [open]="thingFormOpen"></thing-form>
-
-    <h2>groups</h2>
-
-    <form>
-      <input type="text" name="url" [(ngModel)]="newGroupFacebookUrl" placeholder="facebook group url">
-      <button (click)="createGroup()">new</button>
-    </form>
-
-    <div *ngFor="let group of groups">
-      {{ group.name | lowercase }}
-      <button (click)="editGroup(group)">edit</button>
-      <button (click)="deleteGroup(group)">delete</button>
-      <br>
-      <a *ngFor="let friend of group.friends" href="http://www.facebook.com/{{ friend.facebookId }}">{{ friend }}</a>
-    </div>
-
-    <group-form [group]="group" [open]="groupFormOpen"></group-form>
-  `
+  templateUrl: './admin.component.html'
 })
 export class AdminComponent {
   private me: Friend;
