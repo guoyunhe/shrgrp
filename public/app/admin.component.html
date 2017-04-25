@@ -15,15 +15,15 @@
 
 <h2>groups</h2>
 
-<form>
-  <input type="text" name="url" [(ngModel)]="newGroupFacebookUrl" placeholder="facebook group url">
-  <button (click)="createGroup()">new</button>
-</form>
-
 <p *ngFor="let group of groups">
   {{ group.name | lowercase }} ({{ group?.friends?.length || 0 }} friends)
   <button (click)="editGroup(group)">edit</button>
   <button (click)="deleteGroup(group)">delete</button>
 </p>
+
+<form>
+  <input type="text" name="url" [(ngModel)]="newGroupFacebookUrl" placeholder="facebook group url">
+  <button (click)="createGroup()">new</button>
+</form>
 
 <group-form [group]="group" [open]="groupFormOpen"></group-form>
