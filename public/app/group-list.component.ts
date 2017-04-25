@@ -58,7 +58,7 @@ export class GroupListComponent implements OnInit, DoCheck {
     if (this.groups) {
       var groupsFilteredByCity = this.groups.filter(g => g.city === this.city);
       if (this.search) {
-        var search = new Search('isbn');
+        var search = new Search('_id');
         search.addIndex('name');
         search.addIndex('desc');
         search.addDocuments(groupsFilteredByCity);
