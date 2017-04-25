@@ -21,7 +21,7 @@
 </form>
 
 <p *ngFor="let group of groups">
-  {{ group.name | lowercase }} ({{ group.friends.length }} friends)
+  {{ group.name | lowercase }} ({{ group?.friends?.length || 0 }} friends)
   <button (click)="editGroup(group)">edit</button>
   <button (click)="deleteGroup(group)">delete</button>
 </p>
