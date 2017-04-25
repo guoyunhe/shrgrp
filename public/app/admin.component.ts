@@ -37,7 +37,7 @@ export class AdminComponent {
 
   createThing() {
     if (this.things) {
-      var lastThing = this.things[this.things.length-1];
+      var lastThing = this.things[this.things.length - 1];
     }
 
     if (!lastThing || lastThing._id) {
@@ -60,21 +60,38 @@ export class AdminComponent {
   deleteThing(thing: Thing) {
     if (thing._id) {
       this.thingService.deleteThing(thing).then(thing => {
-        this.things = this.things.filter(function (e) { return e !== thing});
+        this.things = this.things.filter(function (e) { return e !== thing });
         thing = null; // if it is referenced, set all of them to null
       });
     } else {
-      this.things = this.things.filter(function (e) { return e !== thing});
+      this.things = this.things.filter(function (e) { return e !== thing });
       thing = null; // if it is referenced, set all of them to null
     }
   }
 
   createGroup() {
-    this.groupService.createGroupFromFacebookUrl(this.newGroupFacebookUrl)
+    if (this.newGroupFacebookUrl) {
+      this.groupService.createGroupFromFacebookUrl(this.newGroupFacebookUrl)
         .then(group => {
           this.groups.push(group);
           this.newGroupFacebookUrl = null;
         });
+    } else {
+      if (this.groups) {
+        var lastGroup = this.groups[this.groups.length - 1];
+      }
+
+      if (!lastGroup || lastGroup._id) {
+        // if no last group, or last group have been saved
+        this.group = new Group();
+        this.groups.push(this.group);
+      } else {
+        // if last group haven't been saved
+        this.group = lastGroup;
+      }
+
+      this.groupFormOpen = Date.now();
+    }
   }
 
   editGroup(group: Group) {
