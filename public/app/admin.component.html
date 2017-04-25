@@ -20,12 +20,10 @@
   <button (click)="createGroup()">new</button>
 </form>
 
-<div *ngFor="let group of groups">
-  {{ group.name | lowercase }}
+<p *ngFor="let group of groups">
+  {{ group.name | lowercase }} ({{ group.friends.length }} friends)
   <button (click)="editGroup(group)">edit</button>
   <button (click)="deleteGroup(group)">delete</button>
-  <br>
-  <a *ngFor="let friend of group.friends" href="http://www.facebook.com/{{ friend.facebookId }}">{{ friend }}</a>
-</div>
+</p>
 
 <group-form [group]="group" [open]="groupFormOpen"></group-form>
